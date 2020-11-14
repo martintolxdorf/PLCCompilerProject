@@ -77,7 +77,8 @@ final class LexerTests {
                 Arguments.of("\"unterminated", false),
                 Arguments.of("\"invalid\\escape\"", true),
                 Arguments.of("\"escaped\\\"quote\"", false),
-                Arguments.of("\"\"\"\"",false)
+                Arguments.of("\"\"\"\"",false),
+                Arguments.of("\"Hello World\"",true)
 
         );
     }
