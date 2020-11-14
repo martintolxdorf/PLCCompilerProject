@@ -2,6 +2,7 @@ package plc.compiler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * The lexer works through three main functions:
@@ -54,16 +55,17 @@ public final class Lexer {
             return lexOperator();
         }else  if(peek("[!]") && peekPlus("[=]")) {
             return lexOperator();
-        }else if(peek("^[ \n\r\t]")){
-            return lexOperator();
         } else if (peek("[0-9]") || peek("[.]")) {
             return lexNumber();
         } else if (match("[A-Za-z_]") || match("[A-Za-z0-9_]")) {
             return lexIdentifier();
-        } else {
+        }else if (peek("\"")){
             return lexString();
+        }else if(peek("[^ \n\r\t]")){
+            return lexOperator();
+        }else{
+            throw new ParseException("invalid operand", chars.index);
         }
-
     }
 
     /**
@@ -134,7 +136,7 @@ public final class Lexer {
         }else if (peek("[!]") && peekPlus("[=]")){
             while (match("[!=]"));
         }else{
-            match("^[ \\n\\r\\t]");
+            match("[^ \\n\\r\\t]");
         }
 
         return chars.emit(Token.Type.OPERATOR);
