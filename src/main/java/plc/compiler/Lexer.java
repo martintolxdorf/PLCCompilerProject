@@ -46,18 +46,17 @@ public final class Lexer {
                 chars.skip();
             }
         }
-        return tList; //TODO
+        return tList;
     }
 
     Token lexToken() throws ParseException {
-//        if(peek("^[=]{2}$","^[!][=]$","^[ \n\r\t]")){
         if (peek("[=]") && peekPlus("[=]")) {
             return lexOperator();
         }else  if(peek("[!]") && peekPlus("[=]")) {
             return lexOperator();
         } else if (peek("[0-9]") || peek("[.]")) {
             return lexNumber();
-        } else if (match("[A-Za-z_]") || match("[A-Za-z0-9_]")) {
+        } else if (peek("[A-Za-z_]")) {
             return lexIdentifier();
         }else if (peek("\"")){
             return lexString();
@@ -73,7 +72,8 @@ public final class Lexer {
      * are allowed in identifiers.
      */
     Token lexIdentifier() throws ParseException {
-        while (match("[A-Za-z_]")) ;
+        match("[A-Za-z_]");
+        while (match("[A-Za-z0-9_]"));
         return chars.emit(Token.Type.IDENTIFIER);
     }
 
@@ -130,7 +130,6 @@ public final class Lexer {
      * unknown characters.
      */
     Token lexOperator() throws ParseException {
-//        while (match("[==]","[!=]","^[ \n\r\t]"));
         if (peek("[=]") && peekPlus("[=]")){
             while (match("[==]"));
         }else if (peek("[!]") && peekPlus("[=]")){
@@ -138,7 +137,6 @@ public final class Lexer {
         }else{
             match("[^ \\n\\r\\t]");
         }
-
         return chars.emit(Token.Type.OPERATOR);
     }
 

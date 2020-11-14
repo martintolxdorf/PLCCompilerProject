@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="plc.compiler.LexerTests" tests="27" skipped="0" failures="0" errors="0" timestamp="2020-11-14T22:29:27" hostname="AKRAM" time="0.055">
+<testsuite name="plc.compiler.LexerTests" tests="29" skipped="0" failures="0" errors="0" timestamp="2020-11-14T22:36:47" hostname="AKRAM" time="0.055">
   <properties/>
-  <testcase name="[1] ==, true" classname="plc.compiler.LexerTests" time="0.024"/>
+  <testcase name="[1] ==, true" classname="plc.compiler.LexerTests" time="0.021"/>
   <testcase name="[2] !=, true" classname="plc.compiler.LexerTests" time="0.001"/>
-  <testcase name="[3] **, false" classname="plc.compiler.LexerTests" time="0.001"/>
-  <testcase name="[4] *, true" classname="plc.compiler.LexerTests" time="0.0"/>
+  <testcase name="[3] **, false" classname="plc.compiler.LexerTests" time="0.002"/>
+  <testcase name="[4] *, true" classname="plc.compiler.LexerTests" time="0.001"/>
   <testcase name="[5]  , false" classname="plc.compiler.LexerTests" time="0.0"/>
   <testcase name="[6] .5, false" classname="plc.compiler.LexerTests" time="0.001"/>
   <testcase name="[1] 1, false" classname="plc.compiler.LexerTests" time="0.0"/>
-  <testcase name="[2] -1.0, false" classname="plc.compiler.LexerTests" time="0.001"/>
-  <testcase name="[3] 007.000, true" classname="plc.compiler.LexerTests" time="0.001"/>
+  <testcase name="[2] -1.0, false" classname="plc.compiler.LexerTests" time="0.0"/>
+  <testcase name="[3] 007.000, true" classname="plc.compiler.LexerTests" time="0.0"/>
   <testcase name="[4] 1., false" classname="plc.compiler.LexerTests" time="0.0"/>
   <testcase name="[5] .5, false" classname="plc.compiler.LexerTests" time="0.001"/>
   <testcase name="[1] 1, true" classname="plc.compiler.LexerTests" time="0.0"/>
   <testcase name="[2] -1.0, false" classname="plc.compiler.LexerTests" time="0.0"/>
-  <testcase name="[3] 007.000, false" classname="plc.compiler.LexerTests" time="0.0"/>
-  <testcase name="[4] 1., false" classname="plc.compiler.LexerTests" time="0.0"/>
+  <testcase name="[3] 007.000, false" classname="plc.compiler.LexerTests" time="0.001"/>
+  <testcase name="[4] 1., false" classname="plc.compiler.LexerTests" time="0.001"/>
   <testcase name="[5] .5, false" classname="plc.compiler.LexerTests" time="0.0"/>
-  <testcase name="[1] &quot;&quot;, true" classname="plc.compiler.LexerTests" time="0.001"/>
-  <testcase name="[2] &quot;abc&quot;, true" classname="plc.compiler.LexerTests" time="0.001"/>
+  <testcase name="[1] &quot;&quot;, true" classname="plc.compiler.LexerTests" time="0.0"/>
+  <testcase name="[2] &quot;abc&quot;, true" classname="plc.compiler.LexerTests" time="0.0"/>
   <testcase name="[3] &quot;Hello,\nWorld&quot;, true" classname="plc.compiler.LexerTests" time="0.001"/>
-  <testcase name="[4] &quot;unterminated, false" classname="plc.compiler.LexerTests" time="0.001"/>
-  <testcase name="[5] &quot;invalid\escape&quot;, true" classname="plc.compiler.LexerTests" time="0.001"/>
-  <testcase name="[6] &quot;escaped\&quot;quote&quot;, false" classname="plc.compiler.LexerTests" time="0.001"/>
-  <testcase name="[1] getName, true" classname="plc.compiler.LexerTests" time="0.0"/>
+  <testcase name="[4] &quot;unterminated, false" classname="plc.compiler.LexerTests" time="0.0"/>
+  <testcase name="[5] &quot;invalid\escape&quot;, true" classname="plc.compiler.LexerTests" time="0.0"/>
+  <testcase name="[6] &quot;escaped\&quot;quote&quot;, false" classname="plc.compiler.LexerTests" time="0.0"/>
+  <testcase name="[7] &quot;&quot;&quot;&quot;, false" classname="plc.compiler.LexerTests" time="0.0"/>
+  <testcase name="[1] getName, true" classname="plc.compiler.LexerTests" time="0.001"/>
   <testcase name="[2] is-empty?, false" classname="plc.compiler.LexerTests" time="0.001"/>
   <testcase name="[3] &lt;=&gt;, false" classname="plc.compiler.LexerTests" time="0.001"/>
-  <testcase name="[4] 42=life, false" classname="plc.compiler.LexerTests" time="0.001"/>
+  <testcase name="[4] 42=life, false" classname="plc.compiler.LexerTests" time="0.0"/>
   <testcase name="[5] why,are,there,commas,, false" classname="plc.compiler.LexerTests" time="0.001"/>
+  <testcase name="[6] a3432432, true" classname="plc.compiler.LexerTests" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

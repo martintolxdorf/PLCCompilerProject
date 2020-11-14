@@ -26,7 +26,8 @@ final class LexerTests {
                 Arguments.of("is-empty?", false),
                 Arguments.of("<=>", false),
                 Arguments.of("42=life", false),
-                Arguments.of("why,are,there,commas,", false)
+                Arguments.of("why,are,there,commas,", false),
+                Arguments.of("a3432432",true)
         );
     }
 
@@ -75,7 +76,9 @@ final class LexerTests {
                 Arguments.of("\"Hello,\\nWorld\"", true),
                 Arguments.of("\"unterminated", false),
                 Arguments.of("\"invalid\\escape\"", true),
-                Arguments.of("\"escaped\\\"quote\"", false)
+                Arguments.of("\"escaped\\\"quote\"", false),
+                Arguments.of("\"\"\"\"",false)
+
         );
     }
 
