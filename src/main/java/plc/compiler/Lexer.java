@@ -52,6 +52,10 @@ public final class Lexer {
 //        if(peek("^[=]{2}$","^[!][=]$","^[ \n\r\t]")){
         if (peek("[=]") && peekPlus("[=]")) {
             return lexOperator();
+        }else  if(peek("[!]") && peekPlus("[=]")) {
+            return lexOperator();
+        }else if(peek("^[ \n\r\t]")){
+            return lexOperator();
         } else if (peek("[0-9]") || peek("[.]")) {
             return lexNumber();
         } else if (match("[A-Za-z_]") || match("[A-Za-z0-9_]")) {
@@ -127,7 +131,12 @@ public final class Lexer {
 //        while (match("[==]","[!=]","^[ \n\r\t]"));
         if (peek("[=]") && peekPlus("[=]")){
             while (match("[==]"));
+        }else if (peek("[!]") && peekPlus("[=]")){
+            while (match("[!=]"));
+        }else{
+            match("^[ \\n\\r\\t]");
         }
+
         return chars.emit(Token.Type.OPERATOR);
     }
 
