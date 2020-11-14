@@ -79,6 +79,22 @@ final class LexerTests {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource
+    void testOperator(String input, boolean success) {
+        test(input, Token.Type.OPERATOR, success);
+    }
+
+    private static Stream<Arguments> testOperator() {
+        return Stream.of(
+                Arguments.of("==", true),
+                Arguments.of("!=", true),
+                Arguments.of("fsdaf", true),
+                Arguments.of(" ", false),
+                Arguments.of(".5", false)
+        );
+    }
+
     /**
      * Tests that the input lexes to the (single) expected token if successful,
      * else throws a {@link ParseException} otherwise.

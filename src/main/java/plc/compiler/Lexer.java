@@ -49,9 +49,10 @@ public final class Lexer {
     }
 
     Token lexToken() throws ParseException {
-        if(peek("^[=]{2}$","^[!][=]$","^[ \n\r\t]")){
+//        if(peek("^[=]{2}$","^[!][=]$","^[ \n\r\t]")){
+        if (peek("[=]") && peekPlus("[=]")) {
             return lexOperator();
-        } else if(peek("[0-9]") || peek("[.]")){
+        } else if (peek("[0-9]") || peek("[.]")) {
             return lexNumber();
         } else if (match("[A-Za-z_]") || match("[A-Za-z0-9_]")) {
             return lexIdentifier();
@@ -94,7 +95,7 @@ public final class Lexer {
             return chars.emit(Token.Type.DECIMAL);
         }
 
-        return chars.emit(Token.Type.INTEGER); //TODO
+        return chars.emit(Token.Type.INTEGER);
     }
 
     /**
@@ -107,10 +108,7 @@ public final class Lexer {
             throw new ParseException("not an acceptable input", chars.index);
         }
         match("\"");
-        if(chars.input.length()==2){ // find better soln
-            return chars.emit(Token.Type.STRING);
-        }
-        while (match("[ A-Za-z0-9!?.*/+-_]"));
+        while (match("[^\"]*"));
         if (!match("\"")) {
             throw new ParseException("no terminating end quote", chars.index);
         }
@@ -126,7 +124,10 @@ public final class Lexer {
      * unknown characters.
      */
     Token lexOperator() throws ParseException {
-        chars.advance();
+//        while (match("[==]","[!=]","^[ \n\r\t]"));
+        if (peek("[=]") && peekPlus("[=]")){
+            while (match("[==]"));
+        }
         return chars.emit(Token.Type.OPERATOR);
     }
 
@@ -141,6 +142,17 @@ public final class Lexer {
                 return false;
             }
         }
+        return true;
+    }
+
+    boolean peekPlus(String... patterns) {
+        chars.index++;
+        for (int i = 0; i < patterns.length; i++) {
+            if (!chars.has(i) || !String.valueOf(chars.get(i)).matches(patterns[i])) {
+                return false;
+            }
+        }
+        chars.index--;
         return true;
     }
 
@@ -197,6 +209,7 @@ public final class Lexer {
             index++;
             length++;
         }
+
 
         /**
          * Resets the length to zero, skipping any consumed characters.
