@@ -49,13 +49,13 @@ public final class Lexer {
     }
 
     Token lexToken() throws ParseException {
-        if(peek("={2}","^[ \n\r\t]")){
+        if(peek("^[=]{2}$","^[!][=]$","^[ \n\r\t]")){
             return lexOperator();
         } else if(peek("[0-9]") || peek("[.]")){
             return lexNumber();
         } else if (match("[A-Za-z_]") || match("[A-Za-z0-9_]")) {
             return lexIdentifier();
-        } else if (peek("[^\"]*")) {
+        } else {
             return lexString();
         }
 
@@ -66,7 +66,7 @@ public final class Lexer {
      * are allowed in identifiers.
      */
     Token lexIdentifier() throws ParseException {
-        while (match("[A-Za-z0-9_+\\-*/.:!?<>=]")) ;
+        while (match("[A-Za-z_]")) ;
         return chars.emit(Token.Type.IDENTIFIER);
     }
 
@@ -103,6 +103,9 @@ public final class Lexer {
      * the character is invalid a {@link ParseException} should be thrown.
      */
     Token lexString() throws ParseException {
+        if(!peek("\"")){
+            throw new ParseException("not an acceptable input", chars.index);
+        }
         match("\"");
         if(chars.input.length()==2){ // find better soln
             return chars.emit(Token.Type.STRING);
