@@ -110,7 +110,7 @@ public final class Lexer {
         if(chars.input.length()==2){ // find better soln
             return chars.emit(Token.Type.STRING);
         }
-        while (match("[A-Za-z,._;/!@#$%^&()~` 0-9]") || match("[\\\\]","[bnrt]")) ;
+        while (match("[ A-Za-z0-9!?.*/+-_]"));
         if (!match("\"")) {
             throw new ParseException("no terminating end quote", chars.index);
         }
