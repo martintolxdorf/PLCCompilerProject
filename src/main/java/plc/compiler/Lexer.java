@@ -48,52 +48,17 @@ public final class Lexer {
         return tList; //TODO
     }
 
-    /**
-     * Lexes the next token. It may be helpful to have this call other methods,
-     * such as {@code lexIdentifier()} or {@code lexString()}, based on the next
-     * character(s).
-     *
-     * Additionally, here is an example of lex a character literal (not used
-     * in this assignment) using the peek/match methods below.
-     *
-     * <pre>
-     * {@code
-     *     Token lexCharacter() {
-     *         if (!match("\'")) {
-     *             //Your lexer should prevent this from happening, as it should
-     *             // only try to lexer a character literal if the next character
-     *             // begins a character literal.
-     *             //Additionally, the index being passed back is a 'ballpark'
-     *             // value. If we were doing proper diagnostics, we would want
-     *             // to provide a range covering the entire error. It's really
-     *             // only for debugging / proof of concept.
-     *             throw new ParseException("Next character does not begin a character literal.", chars.index);
-     *         }
-     *         if (!chars.has(0) || match("\'")) {
-     *             throw new ParseException("Empty character literal.",  chars.index);
-     *         } else if (match("\\")) {
-     *             // lexer escape characters...
-     *         } else {
-     *             chars.advance();
-     *         }
-     *         if (!match("\'")) {
-     *             throw new ParseException("Unterminated character literal.", chars.index);
-     *         }
-     *         return chars.emit(Token.Type.CHARACTER);
-     *     }
-     * }
-     * </pre>
-     */
     Token lexToken() throws ParseException {
-        if(peek("[0-9]") || peek("[.]")){
+        if(peek("={2}","^[ \n\r\t]")){
+            return lexOperator();
+        } else if(peek("[0-9]") || peek("[.]")){
             return lexNumber();
         } else if (match("[A-Za-z_]") || match("[A-Za-z0-9_]")) {
             return lexIdentifier();
-        } else if (peek("\"")) {
+        } else if (peek("[^\"]*")) {
             return lexString();
-        } else {
-            return lexOperator();
-        } //TODO
+        }
+
     }
 
     /**
@@ -101,7 +66,8 @@ public final class Lexer {
      * are allowed in identifiers.
      */
     Token lexIdentifier() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        while (match("[A-Za-z0-9_+\\-*/.:!?<>=]")) ;
+        return chars.emit(Token.Type.IDENTIFIER);
     }
 
     /**
@@ -124,8 +90,11 @@ public final class Lexer {
         }
         if(decimal>1){
             throw new ParseException("more than one decimal", chars.index);
+        }else if(decimal == 1){
+            return chars.emit(Token.Type.DECIMAL);
         }
-        return chars.emit(Token.Type.NUMBER); //TODO
+
+        return chars.emit(Token.Type.INTEGER); //TODO
     }
 
     /**
@@ -134,7 +103,16 @@ public final class Lexer {
      * the character is invalid a {@link ParseException} should be thrown.
      */
     Token lexString() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        match("\"");
+        if(chars.input.length()==2){ // find better soln
+            return chars.emit(Token.Type.STRING);
+        }
+        while (match("[A-Za-z,._;/!@#$%^&()~` 0-9]") || match("[\\\\]","[bnrt]")) ;
+        if (!match("\"")) {
+            throw new ParseException("no terminating end quote", chars.index);
+        }
+        return chars.emit(Token.Type.STRING);
+
     }
 
     /**
@@ -145,7 +123,8 @@ public final class Lexer {
      * unknown characters.
      */
     Token lexOperator() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        chars.advance();
+        return chars.emit(Token.Type.OPERATOR);
     }
 
     /**
