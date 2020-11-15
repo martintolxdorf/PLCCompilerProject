@@ -1,2 +1,4 @@
 plc/compiler/LexerTests.java
  plc.compiler.LexerTests
+plc/compiler/ParserTests.java
+ plc.compiler.ParserTests
