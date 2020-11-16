@@ -180,23 +180,59 @@ public final class Parser {
         if(!peek(Token.Type.OPERATOR) || !(peek("!=") || peek("=="))){
             throw new ParseException("missing operator", tokens.index);
         }
-
-        throw new UnsupportedOperationException(); //TODO
+        String operator = tokens.get(0).getLiteral();
+        match(Token.Type.OPERATOR);
+        Ast.Expression right = parseAdditiveExpression();
+        expression = new Ast.Expression.Binary(operator, expression, right);
+        while(peek(Token.Type.OPERATOR) && (peek("==") || peek("!="))){
+            operator = tokens.get(0).getLiteral();
+            match(Token.Type.OPERATOR);
+            right = parseAdditiveExpression();
+            expression = new Ast.Expression.Binary(operator, expression, right);
+        }
+        return expression;
     }
 
     /**
      * Parses the {@code additive-expression} rule.
      */
     public Ast.Expression parseAdditiveExpression() throws ParseException {
-
-        throw new UnsupportedOperationException(); //TODO
+        Ast.Expression expression = parseMultiplicativeExpression();
+        if(!peek(Token.Type.OPERATOR) || !(peek("+") || peek("-"))){
+            throw new ParseException("missing operator", tokens.index);
+        }
+        String operator = tokens.get(0).getLiteral();
+        match(Token.Type.OPERATOR);
+        Ast.Expression right = parseMultiplicativeExpression();
+        expression = new Ast.Expression.Binary(operator, expression, right);
+        while(peek(Token.Type.OPERATOR) && (peek("+") || peek("-"))){
+            operator = tokens.get(0).getLiteral();
+            match(Token.Type.OPERATOR);
+            right = parseMultiplicativeExpression();
+            expression = new Ast.Expression.Binary(operator, expression, right);
+        }
+        return expression;
     }
 
     /**
      * Parses the {@code multiplicative-expression} rule.
      */
     public Ast.Expression parseMultiplicativeExpression() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        Ast.Expression expression = parsePrimaryExpression();
+        if(!peek(Token.Type.OPERATOR) || !(peek("*") || peek("/"))){
+            throw new ParseException("missing operator", tokens.index);
+        }
+        String operator = tokens.get(0).getLiteral();
+        match(Token.Type.OPERATOR);
+        Ast.Expression right = parsePrimaryExpression();
+        expression = new Ast.Expression.Binary(operator, expression, right);
+        while(peek(Token.Type.OPERATOR) && (peek("*") || peek("/"))){
+            operator = tokens.get(0).getLiteral();
+            match(Token.Type.OPERATOR);
+            right = parsePrimaryExpression();
+            expression = new Ast.Expression.Binary(operator, expression, right);
+        }
+        return expression;
     }
 
     /**
