@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="plc.compiler.ParserTests" tests="2" skipped="0" failures="1" errors="0" timestamp="2020-11-16T16:49:38" hostname="AKRAM" time="0.026">
+<testsuite name="plc.compiler.ParserTests" tests="2" skipped="0" failures="1" errors="0" timestamp="2020-11-16T16:59:31" hostname="AKRAM" time="0.026">
   <properties/>
-  <testcase name="Definition" classname="plc.compiler.ParserTests" time="0.022"/>
-  <testcase name="Initialization" classname="plc.compiler.ParserTests" time="0.002">
+  <testcase name="Definition" classname="plc.compiler.ParserTests" time="0.023"/>
+  <testcase name="Initialization" classname="plc.compiler.ParserTests" time="0.001">
     <failure message="plc.compiler.ParseException: missing ; at end" type="plc.compiler.ParseException">plc.compiler.ParseException: missing ; at end
-	at plc.compiler.Parser.parseDeclarationStatement(Parser.java:105)
+	at plc.compiler.Parser.parseDeclarationStatement(Parser.java:112)
 	at plc.compiler.Parser.parseStatement(Parser.java:59)
 	at plc.compiler.ParserTests.test(ParserTests.java:436)
 	at plc.compiler.ParserTests.testDeclarationStatement(ParserTests.java:75)

@@ -3,6 +3,7 @@ package plc.compiler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * The parser takes the sequence of tokens emitted by the lexer and turns that
@@ -58,7 +59,7 @@ public final class Parser {
             } else if (peek("LET")) {
                 return parseDeclarationStatement();
             } else {
-                return parseExpressionStatement();
+                return parseAssignmentStatement();
             }
         }else if(0 == 0){ //check for expression
             return parseExpressionStatement();
@@ -101,8 +102,8 @@ public final class Parser {
 
         if(peek(Token.Type.IDENTIFIER) && peek("=")){
             Ast.Expression expression = new Ast.Expression();
-            while(!peek(Token.Type.IDENTIFIER) && !peek("=")){
-                expression = parseExpression();
+            while(!peek(Token.Type.OPERATOR) && !peek(";")){
+                expression = new Ast.Expression.Group(expression);
             }
             return new Ast.Statement.Declaration(name,type,Optional.of(expression));
         }else if(peek(Token.Type.OPERATOR) && match(";")){
@@ -118,7 +119,19 @@ public final class Parser {
      * {@code identifier} followed by {@code =}.
      */
     public Ast.Statement.Assignment parseAssignmentStatement() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        String name = tokens.get(0).getLiteral();
+        match(Token.Type.IDENTIFIER);
+        if(!peek(Token.Type.OPERATOR) || !match("=")){
+            throw new ParseException("missing equals", tokens.index);
+        }
+        if(peek(Token.Type.IDENTIFIER) && peek(";")){
+            throw new ParseException("missing expressiom", tokens.index);
+        }
+        Ast.Expression expression = new Ast.Expression();
+        while(!peek(Token.Type.OPERATOR) && !peek(";")){
+            expression = new Ast.Expression.Group(expression);
+        }
+        return new Ast.Statement.Assignment(name,expression);
     }
 
     /**
