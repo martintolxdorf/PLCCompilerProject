@@ -82,17 +82,27 @@ public final class Parser {
      */
     public Ast.Statement.Declaration parseDeclarationStatement() throws ParseException {
         match("LET");
+        if(!peek(Token.Type.IDENTIFIER)){
+            throw new ParseException("missing identifier after let",tokens.index);
+        }
         String name = tokens.get(0).getLiteral();
+        match(Token.Type.IDENTIFIER);
         if(!peek(Token.Type.OPERATOR) || !match(":")){
             throw new ParseException("missing : operator",tokens.index);
         }
-        if(!match(Token.Type.IDENTIFIER)){
+        if(!peek(Token.Type.IDENTIFIER)){
             throw new ParseException("missing identifier after :",tokens.index);
         }
         String type = tokens.get(0).getLiteral();
+        match(Token.Type.IDENTIFIER);
+        if(peek(Token.Type.IDENTIFIER) && peek("=")){
+            //expression stuff
+        }else if(peek(Token.Type.OPERATOR) && match(";")){
 
-        //return Ast.Statement.Declaration(name,type,expression);
-        throw new UnsupportedOperationException(); //TODO
+            return new Ast.Statement.Declaration(name,type,Optional.empty());
+        }
+
+        throw new ParseException("missing ; at end", tokens.index);
     }
 
     /**
