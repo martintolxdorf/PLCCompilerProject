@@ -167,9 +167,7 @@ public final class Parser {
      * Parses the {@code expression} rule.
      */
     public Ast.Expression parseExpression() throws ParseException {
-        //match here
         return parseEqualityExpression();
-        //throw new UnsupportedOperationException(); //TODO
     }
 
     /**
@@ -242,6 +240,10 @@ public final class Parser {
      * not strictly necessary.
      */
     public Ast.Expression parsePrimaryExpression() throws ParseException {
+        if(peek(Token.Type.IDENTIFIER)&& (peek("TRUE")) || peek("FALSE")){
+            //literal expr
+        }
+
         throw new UnsupportedOperationException(); //TODO
     }
 
