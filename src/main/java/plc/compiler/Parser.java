@@ -36,7 +36,12 @@ public final class Parser {
      * Parses the {@code source} rule.
      */
     public Ast.Source parseSource() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        List<Ast.Statement> parseList= new ArrayList<Ast.Statement>();
+        while(tokens.has(0)) {
+            parseList.add(parseStatement());
+        }
+        return new Ast.Source(parseList);
+        //TODO
     }
 
     /**
