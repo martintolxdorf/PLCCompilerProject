@@ -82,23 +82,30 @@ public final class Parser {
      */
     public Ast.Statement.Declaration parseDeclarationStatement() throws ParseException {
         match("LET");
+
         if(!peek(Token.Type.IDENTIFIER)){
             throw new ParseException("missing identifier after let",tokens.index);
         }
         String name = tokens.get(0).getLiteral();
         match(Token.Type.IDENTIFIER);
+
         if(!peek(Token.Type.OPERATOR) || !match(":")){
             throw new ParseException("missing : operator",tokens.index);
         }
+
         if(!peek(Token.Type.IDENTIFIER)){
             throw new ParseException("missing identifier after :",tokens.index);
         }
         String type = tokens.get(0).getLiteral();
         match(Token.Type.IDENTIFIER);
-        if(peek(Token.Type.IDENTIFIER) && peek("=")){
-            //expression stuff
-        }else if(peek(Token.Type.OPERATOR) && match(";")){
 
+        if(peek(Token.Type.IDENTIFIER) && peek("=")){
+            Ast.Expression expression = new Ast.Expression();
+            while(!peek(Token.Type.IDENTIFIER) && !peek("=")){
+                expression = parseExpression();
+            }
+            return new Ast.Statement.Declaration(name,type,Optional.of(expression));
+        }else if(peek(Token.Type.OPERATOR) && match(";")){
             return new Ast.Statement.Declaration(name,type,Optional.empty());
         }
 
@@ -139,7 +146,7 @@ public final class Parser {
      * Parses the {@code expression} rule.
      */
     public Ast.Expression parseExpression() throws ParseException {
-
+        //match here
         throw new UnsupportedOperationException(); //TODO
     }
 
