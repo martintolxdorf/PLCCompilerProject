@@ -1,5 +1,6 @@
 package plc.compiler;
 
+import java.awt.image.TileObserver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -100,7 +101,7 @@ public final class Parser {
         String type = tokens.get(0).getLiteral();
         match(Token.Type.IDENTIFIER);
 
-        if(peek(Token.Type.IDENTIFIER) && peek("=")){
+        if(peek(Token.Type.OPERATOR) && peek("=")){
             Ast.Expression expression = new Ast.Expression();
             while(!peek(Token.Type.OPERATOR) && !peek(";")){
                 expression = new Ast.Expression.Group(expression);
@@ -124,7 +125,7 @@ public final class Parser {
         if(!peek(Token.Type.OPERATOR) || !match("=")){
             throw new ParseException("missing equals", tokens.index);
         }
-        if(peek(Token.Type.IDENTIFIER) && peek(";")){
+        if(peek(Token.Type.OPERATOR) && peek(";")){
             throw new ParseException("missing expressiom", tokens.index);
         }
         Ast.Expression expression = new Ast.Expression();
@@ -139,9 +140,16 @@ public final class Parser {
      * if the next tokens start an if statement, aka {@code if}.
      */
     public Ast.Statement.If parseIfStatement() throws ParseException {
-        Ast.Expression cond = parseExpression();
+        match("IF");
 
+        Ast.Expression expression = new Ast.Expression();
+        while(!peek(Token.Type.OPERATOR) && !peek(";")){
+            expression = new Ast.Expression.Group(expression);
+        }
 
+        if(!peek(Token.Type.IDENTIFIER) || !peek("THEN")){
+            throw new ParseException("missing then", tokens.index);
+        }
 
 
         throw new UnsupportedOperationException(); //TODO
@@ -160,13 +168,19 @@ public final class Parser {
      */
     public Ast.Expression parseExpression() throws ParseException {
         //match here
-        throw new UnsupportedOperationException(); //TODO
+        return parseEqualityExpression();
+        //throw new UnsupportedOperationException(); //TODO
     }
 
     /**
      * Parses the {@code equality-expression} rule.
      */
     public Ast.Expression parseEqualityExpression() throws ParseException {
+        Ast.Expression expression = parseAdditiveExpression();
+        if(!peek(Token.Type.OPERATOR) || !(peek("!=") || peek("=="))){
+            throw new ParseException("missing operator", tokens.index);
+        }
+
         throw new UnsupportedOperationException(); //TODO
     }
 
@@ -174,6 +188,7 @@ public final class Parser {
      * Parses the {@code additive-expression} rule.
      */
     public Ast.Expression parseAdditiveExpression() throws ParseException {
+
         throw new UnsupportedOperationException(); //TODO
     }
 
