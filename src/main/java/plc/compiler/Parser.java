@@ -41,7 +41,6 @@ public final class Parser {
             parseList.add(parseStatement());
         }
         return new Ast.Source(parseList);
-        //TODO
     }
 
     /**
@@ -51,7 +50,21 @@ public final class Parser {
      * clarification on what starts each type of statement.
      */
     public Ast.Statement parseStatement() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        if(peek(Token.Type.IDENTIFIER)) {
+            if (peek("IF")) {
+                return parseIfStatement();
+            } else if (peek("WHILE")) {
+                return parseWhileStatement();
+            } else if (peek("LET")) {
+                return parseDeclarationStatement();
+            } else {
+                return parseExpressionStatement();
+            }
+        }else if(0 == 0){ //check for expression
+            return parseExpressionStatement();
+        }
+
+        throw new ParseException("uh oh",0);
     }
 
     /**
@@ -68,6 +81,17 @@ public final class Parser {
      * called if the next tokens start a declaration statement, aka {@code let}.
      */
     public Ast.Statement.Declaration parseDeclarationStatement() throws ParseException {
+        match("LET");
+        String name = tokens.get(0).getLiteral();
+        if(!peek(Token.Type.OPERATOR) || !match(":")){
+            throw new ParseException("missing : operator",tokens.index);
+        }
+        if(!match(Token.Type.IDENTIFIER)){
+            throw new ParseException("missing identifier after :",tokens.index);
+        }
+        String type = tokens.get(0).getLiteral();
+
+        //return Ast.Statement.Declaration(name,type,expression);
         throw new UnsupportedOperationException(); //TODO
     }
 
@@ -85,6 +109,11 @@ public final class Parser {
      * if the next tokens start an if statement, aka {@code if}.
      */
     public Ast.Statement.If parseIfStatement() throws ParseException {
+        Ast.Expression cond = parseExpression();
+
+
+
+
         throw new UnsupportedOperationException(); //TODO
     }
 
@@ -100,6 +129,7 @@ public final class Parser {
      * Parses the {@code expression} rule.
      */
     public Ast.Expression parseExpression() throws ParseException {
+
         throw new UnsupportedOperationException(); //TODO
     }
 
