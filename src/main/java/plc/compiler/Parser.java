@@ -293,7 +293,20 @@ public final class Parser {
             return new Ast.Expression.Variable(expression.toString());
         }else if(peek(Token.Type.IDENTIFIER)){
             String name = tokens.get(0).getLiteral();
+            match(Token.Type.IDENTIFIER);
             List<Ast.Expression> arguments = new ArrayList<>();
+            if(!peek(Token.Type.OPERATOR) || !peek("(")){
+                return new Ast.Expression.Function(name, arguments);
+            }
+            match("(");
+            arguments.add(parseExpression());
+            if(peek(Token.Type.OPERATOR) && peek(",")){
+                match(",");
+                while(!peek(Token.Type.OPERATOR) && !peek(")")){
+                    arguments.add(parseExpression());
+                }
+                match(")");
+            }
 
             return new Ast.Expression.Function(name, arguments);
         }
