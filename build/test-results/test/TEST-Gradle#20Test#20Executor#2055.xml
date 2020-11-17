@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Gradle Test Executor 39" tests="1" skipped="0" failures="1" errors="0" timestamp="2020-11-17T18:51:28" hostname="AKRAM" time="8.816">
+<testsuite name="Gradle Test Executor 55" tests="1" skipped="0" failures="1" errors="0" timestamp="2020-11-17T19:20:53" hostname="AKRAM" time="8.527">
   <properties/>
-  <testcase name="failed to execute tests" classname="Gradle Test Executor 39" time="8.816">
-    <failure message="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not complete execution for Gradle Test Executor 39." type="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException">org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not complete execution for Gradle Test Executor 39.
+  <testcase name="failed to execute tests" classname="Gradle Test Executor 55" time="8.527">
+    <failure message="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not complete execution for Gradle Test Executor 55." type="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException">org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not complete execution for Gradle Test Executor 55.
 	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -30,9 +30,9 @@
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:832)
 Caused by: java.lang.OutOfMemoryError: Java heap space
-	at plc.compiler.Parser.parseIfStatement(Parser.java:151)
+	at plc.compiler.Parser.parseIfStatement(Parser.java:156)
 	at plc.compiler.Parser.parseStatement(Parser.java:60)
-	at plc.compiler.ParserTests$$Lambda$425/0x0000000800c9a440.apply(Unknown Source)
+	at plc.compiler.ParserTests$$Lambda$425/0x0000000800c93440.apply(Unknown Source)
 	at plc.compiler.ParserTests.test(ParserTests.java:436)
 	at plc.compiler.ParserTests.testIfStatement(ParserTests.java:129)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)

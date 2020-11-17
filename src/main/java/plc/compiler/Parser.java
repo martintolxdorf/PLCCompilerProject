@@ -78,7 +78,11 @@ public final class Parser {
      * javadocs of {@link #parseStatement()}.
      */
     public Ast.Statement.Expression parseExpressionStatement() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        Ast.Expression expression = parseExpression();
+        if(!peek(Token.Type.OPERATOR) || !peek(";")){
+            throw new ParseException("missing ;", tokens.index);
+        }
+        return new Ast.Statement.Expression(expression);
     }
 
     /**
@@ -287,20 +291,21 @@ public final class Parser {
         }else if(peek(Token.Type.OPERATOR) && peek("(")){
             match("(");
             Ast.Expression expression = parseExpression();
+
             if(!peek(Token.Type.OPERATOR) || !match(")")){
                 throw new ParseException("missing )", tokens.index);
             }
-            return new Ast.Expression.Variable(expression.toString());
+            return new Ast.Expression.Group(expression);
         }else if(peek(Token.Type.IDENTIFIER)){
             String name = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER);
             List<Ast.Expression> arguments = new ArrayList<>();
             if(!peek(Token.Type.OPERATOR) || !peek("(")){
-                return new Ast.Expression.Function(name, arguments);
+                return new Ast.Expression.Variable(name);
             }
             match("(");
             arguments.add(parseExpression());
-            if(peek(Token.Type.OPERATOR) && peek(",")){
+            while(peek(Token.Type.OPERATOR) && peek(",")){
                 match(",");
                 while(!peek(Token.Type.OPERATOR) && !peek(")")){
                     arguments.add(parseExpression());
