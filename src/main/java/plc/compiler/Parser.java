@@ -135,12 +135,13 @@ public final class Parser {
             throw new ParseException("missing equals", tokens.index);
         }
         if(peek(Token.Type.OPERATOR) && peek(";")){
-            throw new ParseException("missing expressiom", tokens.index);
+            throw new ParseException("missing expression", tokens.index);
         }
         Ast.Expression expression = parseExpression();
         while(!peek(Token.Type.OPERATOR) && !peek(";")){
             expression = new Ast.Expression.Group(expression);
         }
+        match(";");
         return new Ast.Statement.Assignment(name,expression);
     }
 
@@ -170,9 +171,9 @@ public final class Parser {
         }
 
         if(peek(Token.Type.IDENTIFIER) && peek("END")){
+            match("END");
             return new Ast.Statement.If(expression,thenStatements,elseStatements);
         }
-
         throw new ParseException("missing END", tokens.index);
     }
 
@@ -324,8 +325,8 @@ public final class Parser {
                 while(!peek(Token.Type.OPERATOR) && !peek(")")){
                     arguments.add(parseExpression());
                 }
-                match(")");
             }
+            match(")");
 
             return new Ast.Expression.Function(name, arguments);
         }
