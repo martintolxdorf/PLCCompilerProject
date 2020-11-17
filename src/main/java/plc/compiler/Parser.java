@@ -114,6 +114,7 @@ public final class Parser {
             while(!peek(Token.Type.OPERATOR) && !peek(";")){
                 expression = new Ast.Expression.Group(expression);
             }
+            match(";");
             return new Ast.Statement.Declaration(name,type,Optional.of(expression));
         }else if(peek(Token.Type.OPERATOR) && match(";")){
             return new Ast.Statement.Declaration(name,type,Optional.empty());
@@ -192,6 +193,7 @@ public final class Parser {
         while(!(peek(Token.Type.IDENTIFIER) && peek("END"))){
             statements.add(parseStatement());
         }
+        match("END");
 
         return new Ast.Statement.While(condition, statements);
     }

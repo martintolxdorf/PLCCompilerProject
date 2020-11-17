@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">23</div>
+<div class="counter">1</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.034s</div>
+<div class="counter">0.014s</div>
 <p>duration</p>
 </div>
 </td>
@@ -51,7 +51,7 @@
 </td>
 <td>
 <div class="infoBox failures" id="successRate">
-<div class="percent">95%</div>
+<div class="percent">0%</div>
 <p>successful</p>
 </div>
 </td>
@@ -74,13 +74,15 @@
 <h3 class="failures">testExample1()</h3>
 <span class="code">
 <pre>java.lang.UnsupportedOperationException
-	at plc.compiler.Parser.parsePrimaryExpression(Parser.java:331)
-	at plc.compiler.Parser.parseMultiplicativeExpression(Parser.java:254)
-	at plc.compiler.Parser.parseAdditiveExpression(Parser.java:232)
-	at plc.compiler.Parser.parseEqualityExpression(Parser.java:210)
-	at plc.compiler.Parser.parseExpression(Parser.java:203)
+	at plc.compiler.Parser.parsePrimaryExpression(Parser.java:333)
+	at plc.compiler.Parser.parseMultiplicativeExpression(Parser.java:256)
+	at plc.compiler.Parser.parseAdditiveExpression(Parser.java:234)
+	at plc.compiler.Parser.parseEqualityExpression(Parser.java:212)
+	at plc.compiler.Parser.parseExpression(Parser.java:205)
 	at plc.compiler.Parser.parseExpressionStatement(Parser.java:80)
 	at plc.compiler.Parser.parseStatement(Parser.java:70)
+	at plc.compiler.Parser.parseWhileStatement(Parser.java:194)
+	at plc.compiler.Parser.parseStatement(Parser.java:62)
 	at plc.compiler.Parser.parseSource(Parser.java:46)
 	at plc.compiler.ParserTests.test(ParserTests.java:436)
 	at plc.compiler.ParserTests.testExample1(ParserTests.java:426)
@@ -182,148 +184,14 @@
 <thead>
 <tr>
 <th>Test</th>
-<th>Method name</th>
 <th>Duration</th>
 <th>Result</th>
 </tr>
 </thead>
 <tr>
-<td class="success">Assignment</td>
-<td class="success">testAssignmentStatement(String, List, Assignment)[1]</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Binary Equality</td>
-<td class="success">testBinaryExpression(String, List, Binary)[1]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Binary Addition</td>
-<td class="success">testBinaryExpression(String, List, Binary)[2]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Binary Multiplication</td>
-<td class="success">testBinaryExpression(String, List, Binary)[3]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Definition</td>
-<td class="success">testDeclarationStatement(String, List, Declaration)[1]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Initialization</td>
-<td class="success">testDeclarationStatement(String, List, Declaration)[2]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
 <td class="failures">testExample1()</td>
-<td class="failures">testExample1()</td>
-<td class="failures">0.011s</td>
+<td class="failures">0.014s</td>
 <td class="failures">failed</td>
-</tr>
-<tr>
-<td class="success">Function Expression</td>
-<td class="success">testExpressionStatement(String, List, Expression)[1]</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Zero Arguments</td>
-<td class="success">testFunctionExpression(String, List, Function)[1]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Multiple Arguments</td>
-<td class="success">testFunctionExpression(String, List, Function)[2]</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Complex Argument</td>
-<td class="success">testFunctionExpression(String, List, Function)[3]</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Grouped Variable</td>
-<td class="success">testGroupExpression(String, List, Group)[1]</td>
-<td class="success">0.015s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Grouped Binary</td>
-<td class="success">testGroupExpression(String, List, Group)[2]</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Then</td>
-<td class="success">testIfStatement(String, List, If)[1]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Else</td>
-<td class="success">testIfStatement(String, List, If)[2]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Boolean Literal</td>
-<td class="success">testLiteralExpression(String, List, Literal)[1]</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Integer Literal</td>
-<td class="success">testLiteralExpression(String, List, Literal)[2]</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Decimal Literal</td>
-<td class="success">testLiteralExpression(String, List, Literal)[3]</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">String Literal</td>
-<td class="success">testLiteralExpression(String, List, Literal)[4]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Zero Statements</td>
-<td class="success">testSource(String, List, Source)[1]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Multiple Statements</td>
-<td class="success">testSource(String, List, Source)[2]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Variable</td>
-<td class="success">testVariableExpression(String, List, Variable)[1]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">While</td>
-<td class="success">testWhileStatement(String, List, While)[1]</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
 </tr>
 </table>
 </div>
@@ -335,7 +203,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 6.6</a> at Nov 17, 2020, 3:05:01 PM</p>
+<a href="http://www.gradle.org">Gradle 6.6</a> at Nov 17, 2020, 3:21:54 PM</p>
 </div>
 </div>
 </body>
