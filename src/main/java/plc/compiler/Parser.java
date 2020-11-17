@@ -69,7 +69,7 @@ public final class Parser {
             return parseExpressionStatement();
         }
 
-        throw new ParseException("uh oh",0);
+        throw new ParseException("uh oh", tokens.index);
     }
 
     /**
@@ -105,7 +105,8 @@ public final class Parser {
         match(Token.Type.IDENTIFIER);
 
         if(peek(Token.Type.OPERATOR) && peek("=")){
-            Ast.Expression expression = new Ast.Expression();
+            match(Token.Type.OPERATOR);
+            Ast.Expression expression = parseExpression();
             while(!peek(Token.Type.OPERATOR) && !peek(";")){
                 expression = new Ast.Expression.Group(expression);
             }
@@ -131,7 +132,7 @@ public final class Parser {
         if(peek(Token.Type.OPERATOR) && peek(";")){
             throw new ParseException("missing expressiom", tokens.index);
         }
-        Ast.Expression expression = new Ast.Expression();
+        Ast.Expression expression = parseExpression();
         while(!peek(Token.Type.OPERATOR) && !peek(";")){
             expression = new Ast.Expression.Group(expression);
         }
@@ -145,7 +146,7 @@ public final class Parser {
     public Ast.Statement.If parseIfStatement() throws ParseException {
         match("IF");
 
-        Ast.Expression expression = new Ast.Expression();
+        Ast.Expression expression = parseExpression();
         while(!peek(Token.Type.OPERATOR) && !peek(";")){
             expression = new Ast.Expression.Group(expression);
         }
@@ -283,6 +284,18 @@ public final class Parser {
             temp = temp.substring(1,temp.length()-1);
             match(Token.Type.STRING);
             return new Ast.Expression.Literal(temp);
+        }else if(peek(Token.Type.OPERATOR) && peek("(")){
+            match("(");
+            Ast.Expression expression = parseExpression();
+            if(!peek(Token.Type.OPERATOR) || !match(")")){
+                throw new ParseException("missing )", tokens.index);
+            }
+            return new Ast.Expression.Variable(expression.toString());
+        }else if(peek(Token.Type.IDENTIFIER)){
+            String name = tokens.get(0).getLiteral();
+            List<Ast.Expression> arguments = new ArrayList<>();
+
+            return new Ast.Expression.Function(name, arguments);
         }
 
         throw new UnsupportedOperationException(); //TODO

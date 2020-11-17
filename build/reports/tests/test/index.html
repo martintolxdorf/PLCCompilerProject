@@ -20,13 +20,13 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">4</div>
+<div class="counter">22</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">0</div>
+<div class="counter">17</div>
 <p>failures</p>
 </div>
 </td>
@@ -38,7 +38,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.026s</div>
+<div class="counter">0.039s</div>
 <p>duration</p>
 </div>
 </td>
@@ -47,8 +47,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox success" id="successRate">
-<div class="percent">100%</div>
+<div class="infoBox failures" id="successRate">
+<div class="percent">22%</div>
 <p>successful</p>
 </div>
 </td>
@@ -58,13 +58,89 @@
 <div id="tabs">
 <ul class="tabLinks">
 <li>
-<a href="#tab0">Packages</a>
+<a href="#tab0">Failed tests</a>
 </li>
 <li>
-<a href="#tab1">Classes</a>
+<a href="#tab1">Packages</a>
+</li>
+<li>
+<a href="#tab2">Classes</a>
 </li>
 </ul>
 <div id="tab0" class="tab">
+<h2>Failed tests</h2>
+<ul class="linkList">
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testAssignmentStatement(String, List, Assignment)[1]">Assignment</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testBinaryExpression(String, List, Binary)[1]">Binary Equality</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testBinaryExpression(String, List, Binary)[2]">Binary Addition</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testBinaryExpression(String, List, Binary)[3]">Binary Multiplication</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testDeclarationStatement(String, List, Declaration)[1]">Initialization</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testExample1()">testExample1()</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testExpressionStatement(String, List, Expression)[1]">Function Expression</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testFunctionExpression(String, List, Function)[1]">Zero Arguments</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testFunctionExpression(String, List, Function)[2]">Multiple Arguments</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testFunctionExpression(String, List, Function)[3]">Complex Argument</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testGroupExpression(String, List, Group)[1]">Grouped Variable</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testGroupExpression(String, List, Group)[2]">Grouped Binary</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testIfStatement(String, List, If)[1]">Then</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testIfStatement(String, List, If)[2]">Else</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testSource(String, List, Source)[2]">Multiple Statements</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testVariableExpression(String, List, Variable)[1]">Variable</a>
+</li>
+<li>
+<a href="classes/plc.compiler.ParserTests.html">ParserTests</a>.
+<a href="classes/plc.compiler.ParserTests.html#testWhileStatement(String, List, While)[1]">While</a>
+</li>
+</ul>
+</div>
+<div id="tab1" class="tab">
 <h2>Packages</h2>
 <table>
 <thead>
@@ -79,19 +155,19 @@
 </thead>
 <tbody>
 <tr>
-<td class="success">
+<td class="failures">
 <a href="packages/plc.compiler.html">plc.compiler</a>
 </td>
-<td>4</td>
+<td>22</td>
+<td>17</td>
 <td>0</td>
-<td>0</td>
-<td>0.026s</td>
-<td class="success">100%</td>
+<td>0.039s</td>
+<td class="failures">22%</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="tab1" class="tab">
+<div id="tab2" class="tab">
 <h2>Classes</h2>
 <table>
 <thead>
@@ -106,14 +182,14 @@
 </thead>
 <tbody>
 <tr>
-<td class="success">
+<td class="failures">
 <a href="classes/plc.compiler.ParserTests.html">plc.compiler.ParserTests</a>
 </td>
-<td>4</td>
+<td>22</td>
+<td>17</td>
 <td>0</td>
-<td>0</td>
-<td>0.026s</td>
-<td class="success">100%</td>
+<td>0.039s</td>
+<td class="failures">22%</td>
 </tr>
 </tbody>
 </table>
@@ -126,7 +202,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 6.6</a> at Nov 17, 2020, 1:25:12 PM</p>
+<a href="http://www.gradle.org">Gradle 6.6</a> at Nov 17, 2020, 1:43:14 PM</p>
 </div>
 </div>
 </body>
