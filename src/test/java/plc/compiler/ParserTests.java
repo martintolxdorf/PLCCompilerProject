@@ -77,16 +77,16 @@ final class ParserTests {
 
     private static Stream<Arguments> testDeclarationStatement() {
         return Stream.of(
-//                Arguments.of("Definition",
-//                        Arrays.asList(
-//                                new Token(Token.Type.IDENTIFIER, "LET", -1),
-//                                new Token(Token.Type.IDENTIFIER, "name", -1),
-//                                new Token(Token.Type.OPERATOR, ":", -1),
-//                                new Token(Token.Type.IDENTIFIER, "TYPE", -1),
-//                                new Token(Token.Type.OPERATOR, ";", -1)
-//                        ),
-//                        new Ast.Statement.Declaration("name", "TYPE", Optional.empty())
-//                ),
+                Arguments.of("Definition",
+                        Arrays.asList(
+                                new Token(Token.Type.IDENTIFIER, "LET", -1),
+                                new Token(Token.Type.IDENTIFIER, "name", -1),
+                                new Token(Token.Type.OPERATOR, ":", -1),
+                                new Token(Token.Type.IDENTIFIER, "TYPE", -1),
+                                new Token(Token.Type.OPERATOR, ";", -1)
+                        ),
+                        new Ast.Statement.Declaration("name", "TYPE", Optional.empty())
+                ),
                 Arguments.of("Initialization",
                         Arrays.asList(
                                 new Token(Token.Type.IDENTIFIER, "LET", -1),

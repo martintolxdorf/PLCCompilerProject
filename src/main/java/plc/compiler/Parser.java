@@ -81,6 +81,7 @@ public final class Parser {
         while(!peek(Token.Type.OPERATOR) && !peek(";")){
             expression = new Ast.Expression.Group(expression);
         }
+        match(";");
         return new Ast.Statement.Expression(expression);
     }
 
@@ -150,13 +151,10 @@ public final class Parser {
         match("IF");
 
         Ast.Expression expression = parseExpression();
-        while(!peek(Token.Type.OPERATOR) && !peek(";")){
+        while(!peek(Token.Type.IDENTIFIER) && !peek("THEN")){
             expression = new Ast.Expression.Group(expression);
         }
 
-        if(!peek(Token.Type.IDENTIFIER) || !peek("THEN")){
-            throw new ParseException("missing then", tokens.index);
-        }
         match(Token.Type.IDENTIFIER);
 
         List<Ast.Statement> thenStatements = new ArrayList<>();
