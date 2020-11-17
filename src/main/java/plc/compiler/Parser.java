@@ -1,5 +1,6 @@
 package plc.compiler;
 
+import javax.swing.plaf.nimbus.State;
 import java.awt.image.TileObserver;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,9 +151,24 @@ public final class Parser {
         if(!peek(Token.Type.IDENTIFIER) || !peek("THEN")){
             throw new ParseException("missing then", tokens.index);
         }
+        match(Token.Type.IDENTIFIER);
 
+        List<Ast.Statement> thenStatements = new ArrayList<>();
+        while(!peek(Token.Type.IDENTIFIER) && !(peek("ELSE") || peek("END"))){
+            thenStatements.add(parseStatement());
+        }
 
-        throw new UnsupportedOperationException(); //TODO
+        List<Ast.Statement> elseStatements = new ArrayList<>();
+        while (peek(Token.Type.IDENTIFIER) && peek("ELSE")){
+            match(Token.Type.IDENTIFIER);
+            elseStatements.add(parseStatement());
+        }
+
+        if(peek(Token.Type.IDENTIFIER) && peek("END")){
+            return new Ast.Statement.If(expression,thenStatements,elseStatements);
+        }
+
+        throw new ParseException("missing END", tokens.index);
     }
 
     /**
@@ -241,7 +257,21 @@ public final class Parser {
      */
     public Ast.Expression parsePrimaryExpression() throws ParseException {
         if(peek(Token.Type.IDENTIFIER)&& (peek("TRUE")) || peek("FALSE")){
-            //literal expr
+            Object temp = tokens.get(0);
+            match(Token.Type.IDENTIFIER);
+            return new Ast.Expression.Literal(temp);
+        }else if(peek(Token.Type.INTEGER)){
+            Object temp = tokens.get(0);
+            match(Token.Type.INTEGER);
+            return new Ast.Expression.Literal(temp);
+        }else if(peek(Token.Type.DECIMAL)){
+            Object temp = tokens.get(0);
+            match(Token.Type.DECIMAL);
+            return new Ast.Expression.Literal(temp);
+        }else if(peek(Token.Type.STRING)){
+            Object temp = tokens.get(0);
+            match(Token.Type.STRING);
+            return new Ast.Expression.Literal(temp);
         }
 
         throw new UnsupportedOperationException(); //TODO
