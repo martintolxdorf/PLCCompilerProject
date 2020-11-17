@@ -62,7 +62,7 @@ public final class Parser {
                 return parseWhileStatement();
             } else if (peek("LET")) {
                 return parseDeclarationStatement();
-            } else {
+            } else if(peekPlus("=")) {
                 return parseAssignmentStatement();
             }
         }
@@ -359,6 +359,30 @@ public final class Parser {
                 throw new AssertionError();
             }
         }
+        return true;
+    }
+
+    private boolean peekPlus(Object... patterns) {
+        tokens.index++;
+        for (int i = 0; i < patterns.length; i++) {
+            if (!tokens.has(i)) {
+                tokens.index--;
+                return false;
+            } else if (patterns[i] instanceof Token.Type) {
+                if (patterns[i] != tokens.get(i).getType()) {
+                    tokens.index--;
+                    return false;
+                }
+            } else if (patterns[i] instanceof String) {
+                if (!patterns[i].equals(tokens.get(i).getLiteral())) {
+                    tokens.index--;
+                    return false;
+                }
+            } else {
+                throw new AssertionError();
+            }
+        }
+        tokens.index--;
         return true;
     }
 

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="plc.compiler.ParserTests" tests="1" skipped="0" failures="1" errors="0" timestamp="2020-11-17T19:42:28" hostname="AKRAM" time="6.624">
+<testsuite name="plc.compiler.ParserTests" tests="1" skipped="0" failures="1" errors="0" timestamp="2020-11-17T19:57:12" hostname="AKRAM" time="0.024">
   <properties/>
-  <testcase name="While" classname="plc.compiler.ParserTests" time="6.624">
-    <failure message="plc.compiler.ParseException: missing equals" type="plc.compiler.ParseException">plc.compiler.ParseException: missing equals
-	at plc.compiler.Parser.parseAssignmentStatement(Parser.java:133)
-	at plc.compiler.Parser.parseStatement(Parser.java:66)
+  <testcase name="While" classname="plc.compiler.ParserTests" time="0.024">
+    <failure message="java.lang.UnsupportedOperationException" type="java.lang.UnsupportedOperationException">java.lang.UnsupportedOperationException
+	at plc.compiler.Parser.parsePrimaryExpression(Parser.java:333)
+	at plc.compiler.Parser.parseMultiplicativeExpression(Parser.java:256)
+	at plc.compiler.Parser.parseAdditiveExpression(Parser.java:234)
+	at plc.compiler.Parser.parseEqualityExpression(Parser.java:212)
+	at plc.compiler.Parser.parseExpression(Parser.java:205)
+	at plc.compiler.Parser.parseExpressionStatement(Parser.java:80)
+	at plc.compiler.Parser.parseStatement(Parser.java:70)
 	at plc.compiler.Parser.parseWhileStatement(Parser.java:195)
 	at plc.compiler.Parser.parseStatement(Parser.java:62)
 	at plc.compiler.ParserTests.test(ParserTests.java:436)
