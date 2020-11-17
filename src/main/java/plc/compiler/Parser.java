@@ -2,6 +2,8 @@ package plc.compiler;
 
 import javax.swing.plaf.nimbus.State;
 import java.awt.image.TileObserver;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -259,20 +261,26 @@ public final class Parser {
      * not strictly necessary.
      */
     public Ast.Expression parsePrimaryExpression() throws ParseException {
-        if(peek(Token.Type.IDENTIFIER)&& (peek("TRUE")) || peek("FALSE")){
-            Object temp = tokens.get(0);
+        if(peek(Token.Type.IDENTIFIER) && (peek("TRUE")) || peek("FALSE")){
+            Object temp;
+            if(peek("TRUE")){
+                temp = true;
+            }else{
+                temp = false;
+            }
             match(Token.Type.IDENTIFIER);
             return new Ast.Expression.Literal(temp);
         }else if(peek(Token.Type.INTEGER)){
-            Object temp = tokens.get(0);
+            Object temp = new BigInteger(tokens.get(0).getLiteral());
             match(Token.Type.INTEGER);
             return new Ast.Expression.Literal(temp);
         }else if(peek(Token.Type.DECIMAL)){
-            Object temp = tokens.get(0);
+            Object temp = new BigDecimal(tokens.get(0).getLiteral());
             match(Token.Type.DECIMAL);
             return new Ast.Expression.Literal(temp);
         }else if(peek(Token.Type.STRING)){
-            Object temp = tokens.get(0);
+            String temp = tokens.get(0).getLiteral();
+            temp = temp.substring(1,temp.length()-1);
             match(Token.Type.STRING);
             return new Ast.Expression.Literal(temp);
         }
