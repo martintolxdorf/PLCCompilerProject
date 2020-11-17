@@ -65,11 +65,10 @@ public final class Parser {
             } else {
                 return parseAssignmentStatement();
             }
-        }else if(0 == 0){ //check for expression
-            return parseExpressionStatement();
         }
 
-        throw new ParseException("uh oh", tokens.index);
+        return parseExpressionStatement();
+
     }
 
     /**
@@ -79,8 +78,8 @@ public final class Parser {
      */
     public Ast.Statement.Expression parseExpressionStatement() throws ParseException {
         Ast.Expression expression = parseExpression();
-        if(!peek(Token.Type.OPERATOR) || !peek(";")){
-            throw new ParseException("missing ;", tokens.index);
+        while(!peek(Token.Type.OPERATOR) && !peek(";")){
+            expression = new Ast.Expression.Group(expression);
         }
         return new Ast.Statement.Expression(expression);
     }
@@ -161,7 +160,7 @@ public final class Parser {
         match(Token.Type.IDENTIFIER);
 
         List<Ast.Statement> thenStatements = new ArrayList<>();
-        while(!peek(Token.Type.IDENTIFIER) && !(peek("ELSE") || peek("END"))){
+        while(!(peek(Token.Type.IDENTIFIER) && (peek("ELSE") || peek("END")))){
             thenStatements.add(parseStatement());
         }
 
@@ -183,7 +182,20 @@ public final class Parser {
      * called if the next tokens start a while statement, aka {@code while}.
      */
     public Ast.Statement.While parseWhileStatement() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        match("WHILE");
+
+        Ast.Expression condition = parseExpression();
+        while(!peek(Token.Type.IDENTIFIER) && !peek("DO")){
+            condition = new Ast.Expression.Group(condition);
+        }
+        match("DO");
+
+        List<Ast.Statement> statements = new ArrayList<>();
+        while(!(peek(Token.Type.IDENTIFIER) && peek("END"))){
+            statements.add(parseStatement());
+        }
+
+        return new Ast.Statement.While(condition, statements);
     }
 
     /**
@@ -291,7 +303,6 @@ public final class Parser {
         }else if(peek(Token.Type.OPERATOR) && peek("(")){
             match("(");
             Ast.Expression expression = parseExpression();
-
             if(!peek(Token.Type.OPERATOR) || !match(")")){
                 throw new ParseException("missing )", tokens.index);
             }
@@ -304,6 +315,9 @@ public final class Parser {
                 return new Ast.Expression.Variable(name);
             }
             match("(");
+            if(peek(Token.Type.OPERATOR) && peek(")")){
+                return new Ast.Expression.Function(name, arguments);
+            }
             arguments.add(parseExpression());
             while(peek(Token.Type.OPERATOR) && peek(",")){
                 match(",");
