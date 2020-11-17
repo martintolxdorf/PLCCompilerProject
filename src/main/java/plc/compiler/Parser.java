@@ -192,7 +192,8 @@ public final class Parser {
     public Ast.Expression parseEqualityExpression() throws ParseException {
         Ast.Expression expression = parseAdditiveExpression();
         if(!peek(Token.Type.OPERATOR) || !(peek("!=") || peek("=="))){
-            throw new ParseException("missing operator", tokens.index);
+            return expression;
+//            throw new ParseException("missing operator", tokens.index);
         }
         String operator = tokens.get(0).getLiteral();
         match(Token.Type.OPERATOR);
@@ -213,7 +214,8 @@ public final class Parser {
     public Ast.Expression parseAdditiveExpression() throws ParseException {
         Ast.Expression expression = parseMultiplicativeExpression();
         if(!peek(Token.Type.OPERATOR) || !(peek("+") || peek("-"))){
-            throw new ParseException("missing operator", tokens.index);
+            return expression;
+//            throw new ParseException("missing operator", tokens.index);
         }
         String operator = tokens.get(0).getLiteral();
         match(Token.Type.OPERATOR);
@@ -234,7 +236,8 @@ public final class Parser {
     public Ast.Expression parseMultiplicativeExpression() throws ParseException {
         Ast.Expression expression = parsePrimaryExpression();
         if(!peek(Token.Type.OPERATOR) || !(peek("*") || peek("/"))){
-            throw new ParseException("missing operator", tokens.index);
+            return expression;
+//            throw new ParseException("missing operator", tokens.index);
         }
         String operator = tokens.get(0).getLiteral();
         match(Token.Type.OPERATOR);

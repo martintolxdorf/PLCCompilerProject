@@ -203,19 +203,19 @@ final class ParserTests {
                 Arguments.of("Boolean Literal",
                         Arrays.asList(new Token(Token.Type.IDENTIFIER, "TRUE", -1)),
                         new Ast.Expression.Literal(Boolean.TRUE)
-                ),
-                Arguments.of("Integer Literal",
-                        Arrays.asList(new Token(Token.Type.INTEGER, "1", -1)),
-                        new Ast.Expression.Literal(new BigInteger("1"))
-                ),
-                Arguments.of("Decimal Literal",
-                        Arrays.asList(new Token(Token.Type.DECIMAL, "2.0", -1)),
-                        new Ast.Expression.Literal(new BigDecimal("2.0"))
-                ),
-                Arguments.of("String Literal",
-                        Arrays.asList(new Token(Token.Type.STRING, "\"string\"", -1)),
-                        new Ast.Expression.Literal("string")
                 )
+//                Arguments.of("Integer Literal",
+//                        Arrays.asList(new Token(Token.Type.INTEGER, "1", -1)),
+//                        new Ast.Expression.Literal(new BigInteger("1"))
+//                ),
+//                Arguments.of("Decimal Literal",
+//                        Arrays.asList(new Token(Token.Type.DECIMAL, "2.0", -1)),
+//                        new Ast.Expression.Literal(new BigDecimal("2.0"))
+//                ),
+//                Arguments.of("String Literal",
+//                        Arrays.asList(new Token(Token.Type.STRING, "\"string\"", -1)),
+//                        new Ast.Expression.Literal("string")
+//                )
         );
     }
 
