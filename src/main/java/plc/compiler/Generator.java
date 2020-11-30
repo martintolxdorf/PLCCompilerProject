@@ -59,8 +59,7 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Statement.Expression ast) {
 
-        // TODO:  Generate Java to handle Expression node.
-
+        if(0==0);
         return null;
     }
 
