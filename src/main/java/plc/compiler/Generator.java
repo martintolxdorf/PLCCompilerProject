@@ -33,15 +33,18 @@ public final class Generator implements Ast.Visitor<Void> {
     public Void visit(Ast.Source ast) {
 
         List<Ast.Statement> asts = ast.getStatements();
+
         if(!asts.isEmpty()){
             print("public final class Main {");
             newline(0);
             newline(1);
             print("public static void main(String[] args) {");
             newline(2);
+
             for(int i=0;i<asts.size();i++){
                 visit(asts.get(i));
             }
+
             newline(1);
             print("}");
             newline(0);
@@ -134,7 +137,16 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Expression.Function ast) {
 
-        // TODO:  Generate Java to handle Function node.
+        List<Ast.Expression> asts = ast.getArguments();
+        String out = "";
+        for(int i=0;i<asts.size();i++){
+            Ast temp = asts.get(0);
+            Class h = temp.getClass();
+            if(temp instanceof Ast.Expression.Literal){
+                out+=((Ast.Expression.Literal) temp).getValue();
+            }
+        }
+        print("print(\"",out,"\")");
 
         return null;
     }

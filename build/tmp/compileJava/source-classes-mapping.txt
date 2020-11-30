@@ -1,11 +1,3 @@
-plc/compiler/Lexer.java
- plc.compiler.Lexer
- plc.compiler.Lexer$CharStream
-plc/compiler/ParseException.java
- plc.compiler.ParseException
-plc/compiler/Token.java
- plc.compiler.Token
- plc.compiler.Token$Type
 plc/compiler/Ast.java
  plc.compiler.Ast
  plc.compiler.Ast$Expression
@@ -25,5 +17,13 @@ plc/compiler/Ast.java
 plc/compiler/Parser.java
  plc.compiler.Parser
  plc.compiler.Parser$TokenStream
+plc/compiler/Token.java
+ plc.compiler.Token
+ plc.compiler.Token$Type
+plc/compiler/Lexer.java
+ plc.compiler.Lexer
+ plc.compiler.Lexer$CharStream
+plc/compiler/ParseException.java
+ plc.compiler.ParseException
 plc/compiler/Generator.java
  plc.compiler.Generator

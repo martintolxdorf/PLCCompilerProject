@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="plc.compiler.GeneratorTests" tests="1" skipped="0" failures="1" errors="0" timestamp="2020-11-30T02:15:52" hostname="AKRAM" time="0.023">
+<testsuite name="plc.compiler.GeneratorTests" tests="1" skipped="0" failures="1" errors="0" timestamp="2020-11-30T02:38:00" hostname="AKRAM" time="0.023">
   <properties/>
-  <testcase name="testDeclarationsmall()" classname="plc.compiler.GeneratorTests" time="0.023">
-    <failure message="org.opentest4j.AssertionFailedError: expected: &lt;public final class Main {&#13;&#10;&#13;&#10;    public static void main(String[] args) {&#13;&#10;        STRING str = &quot;hello&quot;;&#13;&#10;        PRINT(str);&#13;&#10;    }&#13;&#10;&#13;&#10;}&#13;&#10;&gt; but was: &lt;public final class Main {&#13;&#10;&#13;&#10;    public static void main(String[] args) {&#13;&#10;        STRING str = ;&#13;&#10;    }&#13;&#10;}&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;public final class Main {
+  <testcase name="testBiggerPrint()" classname="plc.compiler.GeneratorTests" time="0.023">
+    <failure message="org.opentest4j.AssertionFailedError: expected: &lt;public final class Main {&#13;&#10;&#13;&#10;    public static void main(String[] args) {&#13;&#10;        print(&quot;Hello, World!&quot;);&#13;&#10;    }&#13;&#10;&#13;&#10;}&#13;&#10;&gt; but was: &lt;public final class Main {&#13;&#10;&#13;&#10;    public static void main(String[] args) {&#13;&#10;        &#13;&#10;    }&#13;&#10;}&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;public final class Main {
 
     public static void main(String[] args) {
-        STRING str = &quot;hello&quot;;
-        PRINT(str);
+        print(&quot;Hello, World!&quot;);
     }
 
 }
 &gt; but was: &lt;public final class Main {
 
     public static void main(String[] args) {
-        STRING str = ;
+        
     }
 }&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
@@ -22,7 +21,7 @@
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
 	at plc.compiler.GeneratorTests.test(GeneratorTests.java:281)
-	at plc.compiler.GeneratorTests.testDeclarationsmall(GeneratorTests.java:72)
+	at plc.compiler.GeneratorTests.testBiggerPrint(GeneratorTests.java:38)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
