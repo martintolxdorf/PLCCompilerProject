@@ -70,7 +70,12 @@ public final class Generator implements Ast.Visitor<Void> {
         print(ast.getType(), " ", ast.getName());
 
         if (ast.getValue().isPresent()) {
-            print(" = ", ast.getValue().get());
+            Ast temp = ast.getValue().get();
+            String out = "";
+            if(temp instanceof Ast.Expression.Literal){
+                out+=((Ast.Expression.Literal) temp).getValue();
+            }
+            print(" = \"", out, "\"");
         }
         print(";");
 
@@ -138,15 +143,14 @@ public final class Generator implements Ast.Visitor<Void> {
     public Void visit(Ast.Expression.Function ast) {
 
         List<Ast.Expression> asts = ast.getArguments();
-        String out = "";
+        StringBuilder out = new StringBuilder();
         for(int i=0;i<asts.size();i++){
             Ast temp = asts.get(0);
-            Class h = temp.getClass();
             if(temp instanceof Ast.Expression.Literal){
-                out+=((Ast.Expression.Literal) temp).getValue();
+                out.append(((Ast.Expression.Literal) temp).getValue());
             }
         }
-        print("print(\"",out,"\")");
+        print("print(\"", out.toString(),"\")");
 
         return null;
     }
