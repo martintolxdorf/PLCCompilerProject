@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="plc.compiler.GeneratorTests" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-11-30T01:49:55" hostname="AKRAM" time="17.079">
+  <properties/>
+  <testcase name="testSimplePrint()" classname="plc.compiler.GeneratorTests" time="17.079">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

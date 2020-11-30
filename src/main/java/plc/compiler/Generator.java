@@ -33,6 +33,13 @@ public final class Generator implements Ast.Visitor<Void> {
 
         // TODO:  Generate Java to handle Source node.
 
+        print("public final class Main {");
+        newline(0);
+        newline(1);
+        print("public static void main(String[] args) {");
+        newline(2);
+
+
         return null;
     }
 
@@ -47,9 +54,15 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Statement.Declaration ast) {
 
-        // TODO:  Generate Java to handle Declaration node.
+        print(ast.getType(), " ", ast.getName());
+
+        if (ast.getValue().isPresent()) {
+            print(" = ", ast.getValue().get());
+        }
+        print(";");
 
         return null;
+
     }
 
     @Override

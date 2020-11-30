@@ -60,7 +60,7 @@ public final class Lexer {
             return lexIdentifier();
         }else if (peek("\"")){
             return lexString();
-        }else if(peek("[^ \n\r\t]")){
+        }else if(peek("[^ \n\r\t]" ) || peek("[=]")){ //fix this so just "=" is picked up correclty
             return lexOperator();
         }else{
             throw new ParseException("invalid operand", chars.index);
@@ -158,6 +158,7 @@ public final class Lexer {
         chars.index++;
         for (int i = 0; i < patterns.length; i++) {
             if (!chars.has(i) || !String.valueOf(chars.get(i)).matches(patterns[i])) {
+                chars.index--;
                 return false;
             }
         }

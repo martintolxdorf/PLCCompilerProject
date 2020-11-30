@@ -92,6 +92,8 @@ final class LexerTests {
     private static Stream<Arguments> testOperator() {
         return Stream.of(
                 Arguments.of("==", true),
+                Arguments.of("=", true),
+                Arguments.of("?", true),
                 Arguments.of("!=", true),
                 Arguments.of("**", false),
                 Arguments.of("*", true),
