@@ -71,15 +71,10 @@ public final class Generator implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.Declaration ast) {
-        print(ast.getType(), " ", ast.getName());
 
+        print(ast.getType(), " ", ast.getName());
         if (ast.getValue().isPresent()) {
-            Ast temp = ast.getValue().get();
-            String out = "";
-            if(temp instanceof Ast.Expression.Literal){
-                out+=((Ast.Expression.Literal) temp).getValue();
-            }
-            print(" = \"", out, "\"");
+            print(" = ", ast.getValue().get());
         }
         print(";");
 
@@ -119,7 +114,12 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Expression.Literal ast) {
 
-        // TODO:  Generate Java to handle Literal node.
+        Object val = ast.getValue();
+        if(ast.getValue() instanceof String){
+            print("\"",val,"\"");
+        }else{
+            print(val);
+        }
 
         return null;
     }

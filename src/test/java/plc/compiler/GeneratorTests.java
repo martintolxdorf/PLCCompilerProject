@@ -452,9 +452,14 @@ public class GeneratorTests {
 
     @Test
     void testLiteralSmall() {
-        Ast.Expression ast = new Ast.Expression.Literal("string");
-        String expected = "\"string\"";
+//        Ast.Expression ast = new Ast.Expression.Literal("string");
+//        String expected = "\"string\"";
+//        test(ast, expected);
+
+        Ast.Expression ast = new Ast.Expression.Literal(true);
+        String expected = "true";
         test(ast, expected);
+
     }
 
     @Test
