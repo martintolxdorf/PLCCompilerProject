@@ -85,6 +85,10 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Statement.Assignment ast) {
 
+        print(ast.getName(), " = ");
+        visit(ast.getExpression());
+        print(";");
+
         return null;
     }
 
@@ -99,6 +103,17 @@ public final class Generator implements Ast.Visitor<Void> {
         newline(indent);
         print(thenStatements.get(0));
         indent--;
+        newline(indent);
+        print("}");
+        if(!elseStatements.isEmpty()){
+            print(" else {");
+            indent++;
+            newline(indent);
+            print(elseStatements.get(0));
+            indent--;
+            newline(indent);
+            print("}");
+        }
 
         return null;
     }
@@ -106,7 +121,21 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Statement.While ast) {
 
-        // TODO:  Generate Java to handle While node.
+        print("while (", ast.getCondition(), ") {");
+        indent++;
+        newline(indent);
+
+        List<Ast.Statement> statements = ast.getStatements();
+        for(int i=0;i<statements.size();i++){
+            visit(statements.get(i));
+            if(i!=statements.size()-1){
+                newline(indent);
+            }
+        }
+        indent--;
+        newline(indent);
+        print("}");
+
 
         return null;
     }
@@ -127,7 +156,9 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Expression.Group ast) {
 
-        // TODO:  Generate Java to handle Group node.
+        print("(");
+        visit(ast.getExpression());
+        print(")");
 
         return null;
     }
@@ -135,7 +166,9 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Expression.Binary ast) {
 
-        // TODO:  Generate Java to handle Binary node.
+        visit(ast.getLeft());
+        print(" ",ast.getOperator()," ");
+        visit(ast.getRight());
 
         return null;
     }
@@ -143,7 +176,7 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Expression.Variable ast) {
 
-        // TODO:  Generate Java to handle Variable node.
+        print(ast.getName());
 
         return null;
     }
