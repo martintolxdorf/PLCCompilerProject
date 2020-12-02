@@ -45,24 +45,27 @@ public final class Generator implements Ast.Visitor<Void> {
 
             for(int i=0;i<asts.size();i++){
                 visit(asts.get(i));
+                if(i!=asts.size()-1){
+                    newline(indent);
+                }
             }
             indent--;
             newline(indent);
             print("}");
             indent--;
             newline(indent);
+            newline(indent);
             print("}");
+            newline(indent);
         }
-
-
 
         return null;
     }
 
     @Override
     public Void visit(Ast.Statement.Expression ast) {
-
-        if(0==0);
+        visit(ast.getExpression());
+        print(";");
         return null;
     }
 
@@ -87,15 +90,20 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Statement.Assignment ast) {
 
-
-
         return null;
     }
 
     @Override
     public Void visit(Ast.Statement.If ast) {
 
-        // TODO:  Generate Java to handle If node.
+        List<Ast.Statement> thenStatements = ast.getThenStatements();
+        List<Ast.Statement> elseStatements = ast.getElseStatements();
+
+        print("if (",ast.getCondition(),") {");
+        indent++;
+        newline(indent);
+        print(thenStatements.get(0));
+        indent--;
 
         return null;
     }
@@ -151,7 +159,7 @@ public final class Generator implements Ast.Visitor<Void> {
                 out.append(((Ast.Expression.Literal) temp).getValue());
             }
         }
-        print("print(\"", out.toString(),"\")");
+        print(ast.getName(),"(\"", out.toString(),"\")");
 
         return null;
     }
