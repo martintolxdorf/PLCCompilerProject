@@ -36,18 +36,21 @@ public final class Generator implements Ast.Visitor<Void> {
 
         if(!asts.isEmpty()){
             print("public final class Main {");
-            newline(0);
-            newline(1);
+            newline(indent);
+            indent++;
+            newline(indent);
             print("public static void main(String[] args) {");
-            newline(2);
+            indent++;
+            newline(indent);
 
             for(int i=0;i<asts.size();i++){
                 visit(asts.get(i));
             }
-
-            newline(1);
+            indent--;
+            newline(indent);
             print("}");
-            newline(0);
+            indent--;
+            newline(indent);
             print("}");
         }
 
@@ -65,7 +68,6 @@ public final class Generator implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.Declaration ast) {
-
         print(ast.getType(), " ", ast.getName());
 
         if (ast.getValue().isPresent()) {
@@ -85,7 +87,7 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Statement.Assignment ast) {
 
-        // TODO:  Generate Java to handle Assignment node.
+
 
         return null;
     }
