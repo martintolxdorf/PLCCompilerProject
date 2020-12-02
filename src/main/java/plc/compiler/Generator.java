@@ -183,17 +183,17 @@ public final class Generator implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Expression.Function ast) {
-
-        List<Ast.Expression> asts = ast.getArguments();
-        StringBuilder out = new StringBuilder();
-        for(int i=0;i<asts.size();i++){
-            Ast temp = asts.get(0);
-            if(temp instanceof Ast.Expression.Literal){
-                out.append(((Ast.Expression.Literal) temp).getValue());
+        print(ast.getName());
+        if (!ast.getArguments().isEmpty()) {
+            print("(");
+            for (int i = 0; i < ast.getArguments().size(); i++) {
+                print(ast.getArguments().get(i));
+                if(i != ast.getArguments().size() - 1) {
+                    print(", ");
+                }
             }
+            print(")");
         }
-        print(ast.getName(),"(\"", out.toString(),"\")");
-
         return null;
     }
 
