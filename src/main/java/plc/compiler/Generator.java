@@ -99,11 +99,14 @@ public final class Generator implements Ast.Visitor<Void> {
         List<Ast.Statement> elseStatements = ast.getElseStatements();
 
         print("if (",ast.getCondition(),") {");
-        indent++;
-        newline(indent);
-        print(thenStatements.get(0));
-        indent--;
-        newline(indent);
+        if(!thenStatements.isEmpty()) {
+            indent++;
+            newline(indent);
+            print(thenStatements.get(0));
+            indent--;
+            newline(indent);
+        }
+
         print("}");
         if(!elseStatements.isEmpty()){
             print(" else {");
@@ -126,10 +129,12 @@ public final class Generator implements Ast.Visitor<Void> {
         newline(indent);
 
         List<Ast.Statement> statements = ast.getStatements();
-        for(int i=0;i<statements.size();i++){
-            visit(statements.get(i));
-            if(i!=statements.size()-1){
-                newline(indent);
+        if(!statements.isEmpty()){
+            for(int i=0;i<statements.size();i++){
+                visit(statements.get(i));
+                if(i!=statements.size()-1){
+                    newline(indent);
+                }
             }
         }
         indent--;
@@ -186,13 +191,15 @@ public final class Generator implements Ast.Visitor<Void> {
         print(ast.getName());
         if (!ast.getArguments().isEmpty()) {
             print("(");
-            for (int i = 0; i < ast.getArguments().size(); i++) {
-                print(ast.getArguments().get(i));
-                if(i != ast.getArguments().size() - 1) {
-                    print(", ");
+            if(!ast.getArguments().isEmpty()) {
+                for (int i = 0; i < ast.getArguments().size(); i++) {
+                    print(ast.getArguments().get(i));
+                    if (i != ast.getArguments().size() - 1) {
+                        print(", ");
+                    }
                 }
+                print(")");
             }
-            print(")");
         }
         return null;
     }
