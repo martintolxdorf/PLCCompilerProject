@@ -133,12 +133,12 @@ public final class Analyzer implements Ast.Visitor<Ast> {
             //how to check if out of range?
             return new Ast.Expression.Literal(Stdlib.Type.DECIMAL, ((BigDecimal) ast.getValue()).doubleValue());
         }else if (ast.getValue() instanceof String){
-            if(((String) ast.getValue()).matches("[A-Za-z0-9_!?/+-/* ]")){
+            if((ast.getValue().toString().matches("[A-Za-z0-9_!?/+-/* ]"))){
                 return new Ast.Expression.Literal(Stdlib.Type.STRING, ast.getValue().toString());
             }
         }
 
-        throw new UnsupportedOperationException();
+        throw new AnalysisException("howdy");
     }
 
     @Override
@@ -148,17 +148,70 @@ public final class Analyzer implements Ast.Visitor<Ast> {
 
     @Override
     public Ast.Expression.Binary visit(Ast.Expression.Binary ast) throws AnalysisException {
-        throw new UnsupportedOperationException(); //TODO
+
+        if(ast.getOperator().equals("==") || ast.getOperator().equals("!=")){
+
+            if(visit(ast.getLeft()).getType() != Stdlib.Type.VOID && visit(ast.getLeft()).getType() != Stdlib.Type.VOID){
+                return new Ast.Expression.Binary(Stdlib.Type.BOOLEAN,ast.getOperator(),visit(ast.getLeft()),visit(ast.getRight()));
+            }else{
+                throw new AnalysisException("void included");
+            }
+
+        }else if(ast.getOperator().equals("+")){
+
+            if(visit(ast.getLeft()).getType() != Stdlib.Type.VOID && visit(ast.getRight()).getType() != Stdlib.Type.VOID){
+
+                if(visit(ast.getLeft()).getType() == Stdlib.Type.STRING || visit(ast.getRight()).getType() == Stdlib.Type.STRING ){
+                    return new Ast.Expression.Binary(Stdlib.Type.STRING, ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
+                }else if(visit(ast.getLeft()).getType() == Stdlib.Type.INTEGER && visit(ast.getRight()).getType() == Stdlib.Type.INTEGER ){
+                    return new Ast.Expression.Binary(Stdlib.Type.INTEGER, ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
+                }else{
+                    return new Ast.Expression.Binary(Stdlib.Type.DECIMAL, ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
+                }
+
+            }
+
+            throw new AnalysisException("void included");
+
+        }else if(ast.getOperator().equals("-") || ast.getOperator().equals("*") || ast.getOperator().equals("/")){
+
+            if(visit(ast.getLeft()).getType() == Stdlib.Type.INTEGER && visit(ast.getRight()).getType() == Stdlib.Type.INTEGER ){
+                return new Ast.Expression.Binary(Stdlib.Type.INTEGER, ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
+            }else if(visit(ast.getLeft()).getType() == Stdlib.Type.DECIMAL && visit(ast.getRight()).getType() == Stdlib.Type.INTEGER){
+                return new Ast.Expression.Binary(Stdlib.Type.DECIMAL,ast.getOperator(),visit(ast.getLeft()),visit(ast.getRight()));
+            }else if(visit(ast.getLeft()).getType() == Stdlib.Type.INTEGER && visit(ast.getRight()).getType() == Stdlib.Type.DECIMAL){
+                return new Ast.Expression.Binary(Stdlib.Type.DECIMAL,ast.getOperator(),visit(ast.getLeft()),visit(ast.getRight()));
+            }else{
+                throw new AnalysisException("not int or decimal");
+            }
+
+        }
+
+        throw new AnalysisException("uh oh");
     }
 
     @Override
     public Ast.Expression.Variable visit(Ast.Expression.Variable ast) throws AnalysisException {
-        throw new UnsupportedOperationException(); //TODO
+
+        if(scope.lookup(ast.getName()) == null){
+            throw new AnalysisException("var not def");
+        }
+
+        return new Ast.Expression.Variable(scope.lookup(ast.getName()), ast.getName());
     }
 
     @Override
     public Ast.Expression.Function visit(Ast.Expression.Function ast) throws AnalysisException {
-        throw new UnsupportedOperationException(); //TODO
+
+        List<Ast.Expression> arg = new ArrayList<>();
+        List<Stdlib.Type> t = Stdlib.getFunction(ast.getName(), ast.getArguments().size()).getParameterTypes();
+        for (int i = 0; i < ast.getArguments().size(); i++) {
+            Ast.Expression exp = visit(ast.getArguments().get(i));
+            checkAssignable(exp.getType(), t.get(i));
+            arg.add(exp);
+        }
+        return new Ast.Expression.Function(Stdlib.Type.VOID, Stdlib.getFunction(ast.getName(), ast.getArguments().size()).getJvmName(), arg);
+
     }
 
     /**
@@ -168,7 +221,11 @@ public final class Analyzer implements Ast.Visitor<Ast> {
      *  - The first type is not VOID and the target type is ANY
      */
     public static void checkAssignable(Stdlib.Type type, Stdlib.Type target) throws AnalysisException {
-        throw new UnsupportedOperationException(); //TODO
+
+        if (!type.equals(target) && !(type.equals(Stdlib.Type.INTEGER) && target.equals(Stdlib.Type.DECIMAL)) && !(!type.equals(Stdlib.Type.VOID) && target.equals(Stdlib.Type.ANY))){
+            throw new AnalysisException("not assignable");
+        }
+
     }
 
 }
