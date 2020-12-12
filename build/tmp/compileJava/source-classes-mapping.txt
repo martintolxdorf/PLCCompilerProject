@@ -14,9 +14,17 @@ plc/compiler/Ast.java
  plc.compiler.Ast$Statement$If
  plc.compiler.Ast$Statement$While
  plc.compiler.Ast$Visitor
+plc/compiler/Scope.java
+ plc.compiler.Scope
 plc/compiler/Parser.java
  plc.compiler.Parser
  plc.compiler.Parser$TokenStream
+plc/compiler/Stdlib.java
+ plc.compiler.Stdlib
+ plc.compiler.Stdlib$Function
+ plc.compiler.Stdlib$Type
+plc/compiler/AnalysisException.java
+ plc.compiler.AnalysisException
 plc/compiler/Token.java
  plc.compiler.Token
  plc.compiler.Token$Type
@@ -27,3 +35,5 @@ plc/compiler/ParseException.java
  plc.compiler.ParseException
 plc/compiler/Generator.java
  plc.compiler.Generator
+plc/compiler/Analyzer.java
+ plc.compiler.Analyzer

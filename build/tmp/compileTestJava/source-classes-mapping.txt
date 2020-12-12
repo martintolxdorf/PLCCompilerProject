@@ -1,6 +1,8 @@
-plc/compiler/GeneratorTests.java
- plc.compiler.GeneratorTests
 plc/compiler/LexerTests.java
  plc.compiler.LexerTests
+plc/compiler/AnalyzerTests.java
+ plc.compiler.AnalyzerTests
+plc/compiler/GeneratorTests.java
+ plc.compiler.GeneratorTests
 plc/compiler/ParserTests.java
  plc.compiler.ParserTests
