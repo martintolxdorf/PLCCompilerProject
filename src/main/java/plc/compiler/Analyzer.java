@@ -83,7 +83,7 @@ public final class Analyzer implements Ast.Visitor<Ast> {
 
         if(visit(ast.getCondition()).getType() != Stdlib.Type.BOOLEAN) {
             throw new AnalysisException("not bool");
-        }else if(ast.getThenStatements().size() <1){
+        }else if(ast.getThenStatements().isEmpty()){
             throw new AnalysisException("then empty");
         }else {
             return new Ast.Statement.If(visit(ast.getCondition()), thenS, elseS);
