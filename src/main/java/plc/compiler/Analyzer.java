@@ -125,8 +125,11 @@ public final class Analyzer implements Ast.Visitor<Ast> {
             return new Ast.Expression.Literal(Stdlib.Type.INTEGER, ((BigInteger) ast.getValue()).intValue());
 
         }else if (ast.getValue() instanceof BigDecimal){
-            //how to check if out of range?
-            return new Ast.Expression.Literal(Stdlib.Type.DECIMAL, ((BigDecimal) ast.getValue()).doubleValue());
+            double temp = ((BigDecimal) ast.getValue()).doubleValue();
+            if(temp == Double.NEGATIVE_INFINITY || temp == Double.POSITIVE_INFINITY){
+                throw new AnalysisException("double out of range");
+            }
+            return new Ast.Expression.Literal(Stdlib.Type.DECIMAL, temp);
         }else if (ast.getValue() instanceof String){
             if((ast.getValue().toString().matches("[A-Za-z0-9_!?/+-/* ]*"))){
                 return new Ast.Expression.Literal(Stdlib.Type.STRING, ast.getValue().toString());

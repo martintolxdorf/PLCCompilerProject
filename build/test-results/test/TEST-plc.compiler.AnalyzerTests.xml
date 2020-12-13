@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="plc.compiler.AnalyzerTests" tests="17" skipped="0" failures="0" errors="0" timestamp="2020-12-13T00:03:09" hostname="AKRAM" time="0.068">
+<testsuite name="plc.compiler.AnalyzerTests" tests="17" skipped="0" failures="0" errors="0" timestamp="2020-12-13T00:18:03" hostname="AKRAM" time="0.07">
   <properties/>
-  <testcase name="Integer Valid" classname="plc.compiler.AnalyzerTests" time="0.026"/>
-  <testcase name="Integer Invalid" classname="plc.compiler.AnalyzerTests" time="0.001"/>
-  <testcase name="Print One Argument" classname="plc.compiler.AnalyzerTests" time="0.007"/>
-  <testcase name="Print Multiple Arguments" classname="plc.compiler.AnalyzerTests" time="0.003"/>
+  <testcase name="Integer Valid" classname="plc.compiler.AnalyzerTests" time="0.03"/>
+  <testcase name="Integer Invalid" classname="plc.compiler.AnalyzerTests" time="0.002"/>
+  <testcase name="Print One Argument" classname="plc.compiler.AnalyzerTests" time="0.008"/>
+  <testcase name="Print Multiple Arguments" classname="plc.compiler.AnalyzerTests" time="0.001"/>
   <testcase name="Declare Boolean" classname="plc.compiler.AnalyzerTests" time="0.0"/>
   <testcase name="Define String" classname="plc.compiler.AnalyzerTests" time="0.001"/>
   <testcase name="Valid Condition" classname="plc.compiler.AnalyzerTests" time="0.0"/>
   <testcase name="Invalid Condition" classname="plc.compiler.AnalyzerTests" time="0.001"/>
-  <testcase name="Invalid Statement" classname="plc.compiler.AnalyzerTests" time="0.0"/>
+  <testcase name="Invalid Statement" classname="plc.compiler.AnalyzerTests" time="0.001"/>
   <testcase name="Equals" classname="plc.compiler.AnalyzerTests" time="0.001"/>
-  <testcase name="String Concatenation" classname="plc.compiler.AnalyzerTests" time="0.001"/>
-  <testcase name="Same Types" classname="plc.compiler.AnalyzerTests" time="0.002"/>
+  <testcase name="String Concatenation" classname="plc.compiler.AnalyzerTests" time="0.0"/>
+  <testcase name="Same Types" classname="plc.compiler.AnalyzerTests" time="0.001"/>
   <testcase name="Different Types" classname="plc.compiler.AnalyzerTests" time="0.001"/>
-  <testcase name="Integer to Decimal" classname="plc.compiler.AnalyzerTests" time="0.0"/>
+  <testcase name="Integer to Decimal" classname="plc.compiler.AnalyzerTests" time="0.001"/>
   <testcase name="Decimal to Integer" classname="plc.compiler.AnalyzerTests" time="0.001"/>
   <testcase name="String to Any" classname="plc.compiler.AnalyzerTests" time="0.0"/>
   <testcase name="Void to Any" classname="plc.compiler.AnalyzerTests" time="0.0"/>
