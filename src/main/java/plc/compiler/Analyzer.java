@@ -97,14 +97,9 @@ public final class Analyzer implements Ast.Visitor<Ast> {
         if (visit(ast.getCondition()).getType() != Stdlib.Type.BOOLEAN) {
             throw new AnalysisException("not bool");
         }else {
-            //do we need???????????????????
-            Scope j = scope;
-            Scope k = scope;
-            scope = new Scope(j);
             for(int i=0;i<ast.getStatements().size();i++) {
                 visit(ast.getStatements().get(i));
             }
-            scope = k;
             return new Ast.Statement.While(ast.getCondition(), ast.getStatements());
         }
 
@@ -133,7 +128,7 @@ public final class Analyzer implements Ast.Visitor<Ast> {
             //how to check if out of range?
             return new Ast.Expression.Literal(Stdlib.Type.DECIMAL, ((BigDecimal) ast.getValue()).doubleValue());
         }else if (ast.getValue() instanceof String){
-            if((ast.getValue().toString().matches("[A-Za-z0-9_!?/+-/* ]"))){
+            if((ast.getValue().toString().matches("[A-Za-z0-9_!?/+-/* ]*"))){
                 return new Ast.Expression.Literal(Stdlib.Type.STRING, ast.getValue().toString());
             }
         }
@@ -152,7 +147,7 @@ public final class Analyzer implements Ast.Visitor<Ast> {
         if(ast.getOperator().equals("==") || ast.getOperator().equals("!=")){
 
             if(visit(ast.getLeft()).getType() != Stdlib.Type.VOID && visit(ast.getLeft()).getType() != Stdlib.Type.VOID){
-                return new Ast.Expression.Binary(Stdlib.Type.BOOLEAN,ast.getOperator(),visit(ast.getLeft()),visit(ast.getRight()));
+                return new Ast.Expression.Binary(Stdlib.Type.BOOLEAN,ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
             }else{
                 throw new AnalysisException("void included");
             }
@@ -163,7 +158,7 @@ public final class Analyzer implements Ast.Visitor<Ast> {
 
                 if(visit(ast.getLeft()).getType() == Stdlib.Type.STRING || visit(ast.getRight()).getType() == Stdlib.Type.STRING ){
                     return new Ast.Expression.Binary(Stdlib.Type.STRING, ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
-                }else if(visit(ast.getLeft()).getType() == Stdlib.Type.INTEGER && visit(ast.getRight()).getType() == Stdlib.Type.INTEGER ){
+                }else if(visit(ast.getLeft()).getType() == Stdlib.Type.INTEGER && visit(ast.getRight()).getType() == Stdlib.Type.INTEGER){
                     return new Ast.Expression.Binary(Stdlib.Type.INTEGER, ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
                 }else{
                     return new Ast.Expression.Binary(Stdlib.Type.DECIMAL, ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
@@ -178,16 +173,16 @@ public final class Analyzer implements Ast.Visitor<Ast> {
             if(visit(ast.getLeft()).getType() == Stdlib.Type.INTEGER && visit(ast.getRight()).getType() == Stdlib.Type.INTEGER ){
                 return new Ast.Expression.Binary(Stdlib.Type.INTEGER, ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
             }else if(visit(ast.getLeft()).getType() == Stdlib.Type.DECIMAL && visit(ast.getRight()).getType() == Stdlib.Type.INTEGER){
-                return new Ast.Expression.Binary(Stdlib.Type.DECIMAL,ast.getOperator(),visit(ast.getLeft()),visit(ast.getRight()));
+                return new Ast.Expression.Binary(Stdlib.Type.DECIMAL,ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
             }else if(visit(ast.getLeft()).getType() == Stdlib.Type.INTEGER && visit(ast.getRight()).getType() == Stdlib.Type.DECIMAL){
-                return new Ast.Expression.Binary(Stdlib.Type.DECIMAL,ast.getOperator(),visit(ast.getLeft()),visit(ast.getRight()));
+                return new Ast.Expression.Binary(Stdlib.Type.DECIMAL, ast.getOperator(), visit(ast.getLeft()), visit(ast.getRight()));
             }else{
                 throw new AnalysisException("not int or decimal");
             }
 
         }
 
-        throw new AnalysisException("uh oh");
+        throw new AnalysisException("uh oh wheres the operator chief");
     }
 
     @Override
@@ -203,14 +198,14 @@ public final class Analyzer implements Ast.Visitor<Ast> {
     @Override
     public Ast.Expression.Function visit(Ast.Expression.Function ast) throws AnalysisException {
 
-        List<Ast.Expression> arg = new ArrayList<>();
-        List<Stdlib.Type> t = Stdlib.getFunction(ast.getName(), ast.getArguments().size()).getParameterTypes();
+        List<Ast.Expression> args = new ArrayList<>();
+
         for (int i = 0; i < ast.getArguments().size(); i++) {
-            Ast.Expression exp = visit(ast.getArguments().get(i));
-            checkAssignable(exp.getType(), t.get(i));
-            arg.add(exp);
+            checkAssignable(visit(ast.getArguments().get(i)).getType(), Stdlib.getFunction(ast.getName(), ast.getArguments().size()).getParameterTypes().get(i));
+            args.add(visit(ast.getArguments().get(i)));
         }
-        return new Ast.Expression.Function(Stdlib.Type.VOID, Stdlib.getFunction(ast.getName(), ast.getArguments().size()).getJvmName(), arg);
+
+        return new Ast.Expression.Function(Stdlib.Type.VOID, Stdlib.getFunction(ast.getName(), ast.getArguments().size()).getJvmName(), args);
 
     }
 
