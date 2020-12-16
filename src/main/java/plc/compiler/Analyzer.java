@@ -63,7 +63,7 @@ public final class Analyzer implements Ast.Visitor<Ast> {
     @Override
     public Ast.Statement.Assignment visit(Ast.Statement.Assignment ast) throws AnalysisException {
         if(ast.getExpression().getType() == scope.lookup(ast.getName())){
-            return new Ast.Statement.Assignment(ast.getName(), ast.getExpression());
+            return new Ast.Statement.Assignment(ast.getName(), visit(ast.getExpression()));
         }
         throw new AnalysisException("not same");
     }
