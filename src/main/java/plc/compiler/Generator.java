@@ -34,8 +34,10 @@ public final class Generator implements Ast.Visitor<Void> {
 
         List<Ast.Statement> asts = ast.getStatements();
 
-        if(!asts.isEmpty()){
-            print("public final class Main {");
+//        if(!asts.isEmpty()){
+            if(0==0){
+
+                print("public final class Main {");
             newline(indent);
             indent++;
             newline(indent);

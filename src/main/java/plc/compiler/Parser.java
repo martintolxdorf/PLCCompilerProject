@@ -55,6 +55,7 @@ public final class Parser {
      * clarification on what starts each type of statement.
      */
     public Ast.Statement parseStatement() throws ParseException {
+
         if(peek(Token.Type.IDENTIFIER)) {
             if (peek("IF")) {
                 return parseIfStatement();
@@ -64,10 +65,14 @@ public final class Parser {
                 return parseDeclarationStatement();
             } else if(peekPlus("=")) {
                 return parseAssignmentStatement();
+            }else{
+                return parseExpressionStatement();
             }
         }
 
-        return parseExpressionStatement();
+        throw new ParseException("error", tokens.index);
+
+
 
     }
 
@@ -79,6 +84,9 @@ public final class Parser {
     public Ast.Statement.Expression parseExpressionStatement() throws ParseException {
         Ast.Expression expression = parseExpression();
         while(!peek(Token.Type.OPERATOR) && !peek(";")){
+            if(!peek(Token.Type.OPERATOR)){
+                throw new ParseException("uhh", tokens.index);
+            }
             expression = new Ast.Expression.Group(expression);
         }
         match(";");
@@ -139,6 +147,9 @@ public final class Parser {
         }
         Ast.Expression expression = parseExpression();
         while(!peek(Token.Type.OPERATOR) && !peek(";")){
+            if(!peek(Token.Type.OPERATOR)){
+                throw new ParseException("uhh", tokens.index);
+            }
             expression = new Ast.Expression.Group(expression);
         }
         match(";");
@@ -151,12 +162,18 @@ public final class Parser {
      */
     public Ast.Statement.If parseIfStatement() throws ParseException {
         match("IF");
+        if(peek("THEN")){
+            throw new ParseException("Missing expr", tokens.index);
+        }
 
         Ast.Expression expression = parseExpression();
         while(!peek(Token.Type.IDENTIFIER) && !peek("THEN")){
             expression = new Ast.Expression.Group(expression);
         }
 
+        if(!peek("THEN")){
+            throw new ParseException("Missing then", tokens.index);
+        }
         match(Token.Type.IDENTIFIER);
 
         List<Ast.Statement> thenStatements = new ArrayList<>();
@@ -165,9 +182,14 @@ public final class Parser {
         }
 
         List<Ast.Statement> elseStatements = new ArrayList<>();
-        while (peek(Token.Type.IDENTIFIER) && peek("ELSE")){
+        if (peek(Token.Type.IDENTIFIER) && peek("ELSE")){
             match(Token.Type.IDENTIFIER);
-            elseStatements.add(parseStatement());
+            if(peek("END")){
+                throw new ParseException("missing else expr", tokens.index);
+            }
+            while (!(peek(Token.Type.IDENTIFIER) && peek("END"))) {
+                elseStatements.add(parseStatement());
+            }
         }
 
         if(peek(Token.Type.IDENTIFIER) && peek("END")){
@@ -183,18 +205,24 @@ public final class Parser {
      */
     public Ast.Statement.While parseWhileStatement() throws ParseException {
         match("WHILE");
-
+        if(peek("DO")){
+            throw new ParseException("missing expr", tokens.index);
+        }
         Ast.Expression condition = parseExpression();
         while(!peek(Token.Type.IDENTIFIER) && !peek("DO")){
             condition = new Ast.Expression.Group(condition);
         }
-        match("DO");
+        if(!match("DO")){
+            throw new ParseException("missing do", tokens.index);
+        }
 
         List<Ast.Statement> statements = new ArrayList<>();
-        while(!(peek(Token.Type.IDENTIFIER) && peek("END"))){
+        while(!(peek(Token.Type.IDENTIFIER) && peek("END")) && tokens.index != tokens.tokens.size()){
             statements.add(parseStatement());
         }
-        match("END");
+        if(!match("END")){
+            throw new ParseException("missing END", tokens.index);
+        };
 
         return new Ast.Statement.While(condition, statements);
     }
@@ -308,30 +336,41 @@ public final class Parser {
                 throw new ParseException("missing )", tokens.index);
             }
             return new Ast.Expression.Group(expression);
-        }else if(peek(Token.Type.IDENTIFIER)){
+        }else if(peek(Token.Type.IDENTIFIER)) {
             String name = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER);
             List<Ast.Expression> arguments = new ArrayList<>();
-            if(!peek(Token.Type.OPERATOR) || !peek("(")){
+            if (!peek(Token.Type.OPERATOR) || !peek("(")) {
                 return new Ast.Expression.Variable(name);
             }
             match("(");
-            if(peek(Token.Type.OPERATOR) && peek(")")){
+            if (peek(Token.Type.OPERATOR) && peek(")")) {
                 return new Ast.Expression.Function(name, arguments);
             }
             arguments.add(parseExpression());
+            if (peek(")")){
+                return new Ast.Expression.Function(name, arguments);
+            }else if(!peek(",")){
+                throw new ParseException("missing closing paren", tokens.index);
+            }
+
             while(peek(Token.Type.OPERATOR) && peek(",")){
                 match(",");
-                while(!peek(Token.Type.OPERATOR) && !peek(")")){
+                if(peek(")")){
+                    throw new ParseException("missing arg", tokens.index);
+                }
+                if(!peek(Token.Type.OPERATOR) && !peek(")")){
                     arguments.add(parseExpression());
                 }
             }
-            match(")");
+            if(!match(")")){
+                throw new ParseException("missing comma", tokens.index);
+            }
 
             return new Ast.Expression.Function(name, arguments);
         }
 
-        throw new UnsupportedOperationException(); //TODO
+        throw new UnsupportedOperationException();
     }
 
     /**

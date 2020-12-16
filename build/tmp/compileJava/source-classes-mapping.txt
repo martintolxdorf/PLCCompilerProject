@@ -16,9 +16,9 @@ plc/compiler/Ast.java
  plc.compiler.Ast$Visitor
 plc/compiler/Scope.java
  plc.compiler.Scope
-plc/compiler/Parser.java
- plc.compiler.Parser
- plc.compiler.Parser$TokenStream
+plc/compiler/Lexer.java
+ plc.compiler.Lexer
+ plc.compiler.Lexer$CharStream
 plc/compiler/Stdlib.java
  plc.compiler.Stdlib
  plc.compiler.Stdlib$Function
@@ -32,8 +32,8 @@ plc/compiler/Analyzer.java
  plc.compiler.Analyzer
 plc/compiler/ParseException.java
  plc.compiler.ParseException
+plc/compiler/Parser.java
+ plc.compiler.Parser
+ plc.compiler.Parser$TokenStream
 plc/compiler/Generator.java
  plc.compiler.Generator
-plc/compiler/Lexer.java
- plc.compiler.Lexer
- plc.compiler.Lexer$CharStream

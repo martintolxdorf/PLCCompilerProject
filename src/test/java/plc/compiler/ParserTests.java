@@ -45,6 +45,18 @@ final class ParserTests {
                                 new Ast.Statement.Expression(new Ast.Expression.Variable("stmt2")),
                                 new Ast.Statement.Expression(new Ast.Expression.Variable("stmt3"))
                         ))
+                ),
+                Arguments.of("Semicolon(fail)",
+                        Arrays.asList(
+                                new Token(Token.Type.OPERATOR, ";", -1),
+                                new Token(Token.Type.OPERATOR, ";", -1),
+                                new Token(Token.Type.OPERATOR, ";", -1)
+                        ),
+                        new Ast.Source(Arrays.asList(
+                                new Ast.Statement.Expression(new Ast.Expression.Variable("stmt1")),
+                                new Ast.Statement.Expression(new Ast.Expression.Variable("stmt2")),
+                                new Ast.Statement.Expression(new Ast.Expression.Variable("stmt3"))
+                        ))
                 )
         );
     }
@@ -154,7 +166,29 @@ final class ParserTests {
                                 new Token(Token.Type.IDENTIFIER, "stmt1", -1),
                                 new Token(Token.Type.OPERATOR, ";", -1),
                                 new Token(Token.Type.IDENTIFIER, "ELSE", -1),
+//                                new Token(Token.Type.IDENTIFIER, "stmt2", -1),
+//                                new Token(Token.Type.OPERATOR, ";", -1),
+                                new Token(Token.Type.IDENTIFIER, "END", -1)
+                        ),
+                        new Ast.Statement.If(
+                                new Ast.Expression.Variable("expr"),
+                                Arrays.asList(new Ast.Statement.Expression(new Ast.Expression.Variable("stmt1"))),
+                                Arrays.asList(new Ast.Statement.Expression(new Ast.Expression.Variable("stmt2")))
+                        )
+                ),
+                Arguments.of("Then",
+                        Arrays.asList(
+                                new Token(Token.Type.IDENTIFIER, "IF", -1),
+//                                new Token(Token.Type.IDENTIFIER, "expr", -1),
+                                new Token(Token.Type.IDENTIFIER, "THEN", -1),
+                                new Token(Token.Type.IDENTIFIER, "stmt1", -1),
+                                new Token(Token.Type.OPERATOR, ";", -1),
                                 new Token(Token.Type.IDENTIFIER, "stmt2", -1),
+                                new Token(Token.Type.OPERATOR, ";", -1),
+                                new Token(Token.Type.IDENTIFIER, "ELSE", -1),
+                                new Token(Token.Type.IDENTIFIER, "stmt3", -1),
+                                new Token(Token.Type.OPERATOR, ";", -1),
+                                new Token(Token.Type.IDENTIFIER, "stmt4", -1),
                                 new Token(Token.Type.OPERATOR, ";", -1),
                                 new Token(Token.Type.IDENTIFIER, "END", -1)
                         ),
@@ -322,6 +356,7 @@ final class ParserTests {
                         Arrays.asList(
                                 new Token(Token.Type.IDENTIFIER, "name", -1),
                                 new Token(Token.Type.OPERATOR, "(", -1),
+//                                new Token(Token.Type.IDENTIFIER, "expr1", -1),
                                 new Token(Token.Type.OPERATOR, ")", -1)
                         ),
                         new Ast.Expression.Function("name", Arrays.asList())

@@ -15,9 +15,9 @@ public class GeneratorTests {
     @Test
     void testSourcePrint() {
         Ast.Source ast = new Ast.Source(Arrays.asList(
-                new Ast.Statement.Expression(new Ast.Expression.Function("print", Arrays.asList(
-                        new Ast.Expression.Literal("Hello, World!")
-                )))
+//                new Ast.Statement.Expression(new Ast.Expression.Function("print", Arrays.asList(
+//                        new Ast.Expression.Literal("Hello, World!")
+//                )))
         ));
         String expected = String.join(System.lineSeparator(),
                 "public final class Main {",
