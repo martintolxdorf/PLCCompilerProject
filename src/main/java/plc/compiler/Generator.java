@@ -34,32 +34,28 @@ public final class Generator implements Ast.Visitor<Void> {
 
         List<Ast.Statement> asts = ast.getStatements();
 
-//        if(!asts.isEmpty()){
-            if(0==0){
+        print("public final class Main {");
+        newline(indent);
+        indent++;
+        newline(indent);
+        print("public static void main(String[] args) {");
+        indent++;
+        newline(indent);
 
-                print("public final class Main {");
-            newline(indent);
-            indent++;
-            newline(indent);
-            print("public static void main(String[] args) {");
-            indent++;
-            newline(indent);
-
-            for(int i=0;i<asts.size();i++){
-                visit(asts.get(i));
-                if(i!=asts.size()-1){
-                    newline(indent);
-                }
+        for(int i=0;i<asts.size();i++){
+            visit(asts.get(i));
+            if(i!=asts.size()-1){
+                newline(indent);
             }
-            indent--;
-            newline(indent);
-            print("}");
-            indent--;
-            newline(indent);
-            newline(indent);
-            print("}");
-            newline(indent);
         }
+        indent--;
+        newline(indent);
+        print("}");
+        indent--;
+        newline(indent);
+        newline(indent);
+        print("}");
+        newline(indent);
 
         return null;
     }
@@ -103,8 +99,10 @@ public final class Generator implements Ast.Visitor<Void> {
         print("if (",ast.getCondition(),") {");
         if(!thenStatements.isEmpty()) {
             indent++;
-            newline(indent);
-            print(thenStatements.get(0));
+            for(int i=0;i<thenStatements.size();i++){
+                newline(indent);
+                print(thenStatements.get(i));
+            }
             indent--;
             newline(indent);
         }
@@ -113,8 +111,10 @@ public final class Generator implements Ast.Visitor<Void> {
         if(!elseStatements.isEmpty()){
             print(" else {");
             indent++;
-            newline(indent);
-            print(elseStatements.get(0));
+            for(int i=0;i<elseStatements.size();i++){
+                newline(indent);
+                print(elseStatements.get(i));
+            }
             indent--;
             newline(indent);
             print("}");
@@ -127,20 +127,21 @@ public final class Generator implements Ast.Visitor<Void> {
     public Void visit(Ast.Statement.While ast) {
 
         print("while (", ast.getCondition(), ") {");
-        indent++;
-        newline(indent);
 
         List<Ast.Statement> statements = ast.getStatements();
         if(!statements.isEmpty()){
+            indent++;
+            newline(indent);
             for(int i=0;i<statements.size();i++){
                 visit(statements.get(i));
                 if(i!=statements.size()-1){
                     newline(indent);
                 }
             }
+            indent--;
+            newline(indent);
         }
-        indent--;
-        newline(indent);
+
         print("}");
 
 
@@ -191,8 +192,9 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Expression.Function ast) {
         print(ast.getName());
+        print("(");
         if (!ast.getArguments().isEmpty()) {
-            print("(");
+
             if(!ast.getArguments().isEmpty()) {
                 for (int i = 0; i < ast.getArguments().size(); i++) {
                     print(ast.getArguments().get(i));
@@ -200,9 +202,9 @@ public final class Generator implements Ast.Visitor<Void> {
                         print(", ");
                     }
                 }
-                print(")");
             }
         }
+        print(")");
         return null;
     }
 

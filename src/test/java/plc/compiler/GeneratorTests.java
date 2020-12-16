@@ -41,6 +41,7 @@ public class GeneratorTests {
         test(ast, expected);
     }
 
+
     @Test
     void testExpressionPrint() {
         Ast.Expression ast = new Ast.Expression.Function("print", Arrays.asList(
@@ -131,9 +132,17 @@ public class GeneratorTests {
                 Arrays.asList(
                         new Ast.Statement.Expression(new Ast.Expression.Function("PRINT", Arrays.asList(
                                 new Ast.Expression.Literal("five")
+                        ))),new Ast.Statement.Expression(new Ast.Expression.Function("PRINT", Arrays.asList(
+                                new Ast.Expression.Literal("six")
                         )))
                 ),
-                Arrays.asList()
+                Arrays.asList(
+                        new Ast.Statement.Expression(new Ast.Expression.Function("PRINT", Arrays.asList(
+                                new Ast.Expression.Literal("five")
+                        ))),new Ast.Statement.Expression(new Ast.Expression.Function("PRINT", Arrays.asList(
+                                new Ast.Expression.Literal("six")
+                        )))
+                )
         );
         String expected = String.join(System.lineSeparator(),
                 "if (score == 5) {",
@@ -323,15 +332,16 @@ public class GeneratorTests {
                         new Ast.Expression.Variable("i"),
                         new Ast.Expression.Literal(BigInteger.ZERO)
                 ),
-                Arrays.asList(
-                        new Ast.Statement.Expression(new Ast.Expression.Function("PRINT", Arrays.asList(
-                                new Ast.Expression.Literal("bean")
-                        ))),
-                        new Ast.Statement.Assignment("i", new Ast.Expression.Binary("-",
-                                new Ast.Expression.Variable("i"),
-                                new Ast.Expression.Literal(BigInteger.ONE)
-                        ))
-                )
+                Arrays.asList()
+//                Arrays.asList(
+//                        new Ast.Statement.Expression(new Ast.Expression.Function("PRINT", Arrays.asList(
+//                                new Ast.Expression.Literal("bean")
+//                        ))),
+//                        new Ast.Statement.Assignment("i", new Ast.Expression.Binary("-",
+//                                new Ast.Expression.Variable("i"),
+//                                new Ast.Expression.Literal(BigInteger.ONE)
+//                        ))
+//                )
         );
         String expected = String.join(System.lineSeparator(),
                 "while (i != 0) {",

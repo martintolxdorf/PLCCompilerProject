@@ -100,20 +100,46 @@ public final class AnalyzerTests {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource
+    public void testWhile(String test, Ast.Statement.While ast, Ast.Statement.While expected) {
+        test(ast, expected, Collections.emptyMap());
+    }
+
+    public static Stream<Arguments> testWhile() {
+        return Stream.of(
+                Arguments.of("Valid Condition",
+                        new Ast.Statement.While(
+                                new Ast.Expression.Literal(Boolean.TRUE),
+                                Arrays.asList(
+                                        new Ast.Statement.Expression(new Ast.Expression.Function("PRINT", Arrays.asList(
+                                                new Ast.Expression.Literal("string")
+                                        )))
+                                )
+                        ),
+                        new Ast.Statement.While(
+                                new Ast.Expression.Literal(Stdlib.Type.BOOLEAN, Boolean.TRUE),
+                                Arrays.asList(
+                                        new Ast.Statement.Expression(new Ast.Expression.Function(Stdlib.Type.VOID, "System.out.println", Arrays.asList(
+                                                new Ast.Expression.Literal(Stdlib.Type.STRING, "string")
+                                        )))
+                                )
+                        )
+                )
+        );
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource
     public void testLiteralExpression(String test, Ast.Expression.Literal ast, Ast.Expression.Literal expected) {
         test(ast, expected, Collections.emptyMap());
     }
 
     public static Stream<Arguments> testLiteralExpression() {
         return Stream.of(
-                Arguments.of("Integer Valid",
-                        new Ast.Expression.Literal(BigInteger.TEN),
-                        new Ast.Expression.Literal(Stdlib.Type.INTEGER, 10)
-                ),
-                Arguments.of("Integer Invalid",
-                        new Ast.Expression.Literal(BigInteger.valueOf(123456789123456789L)),
-                        null
+                Arguments.of("true",
+                        new Ast.Expression.Literal(Boolean.TRUE),
+                        new Ast.Expression.Literal(Stdlib.Type.BOOLEAN, Boolean.TRUE)
                 )
+
         );
     }
 
@@ -147,6 +173,8 @@ public final class AnalyzerTests {
                 )
         );
     }
+
+
 
     @ParameterizedTest(name = "{0}")
     @MethodSource
