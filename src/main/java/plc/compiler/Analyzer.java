@@ -97,10 +97,11 @@ public final class Analyzer implements Ast.Visitor<Ast> {
         if (visit(ast.getCondition()).getType() != Stdlib.Type.BOOLEAN) {
             throw new AnalysisException("not bool");
         }else {
+            List<Ast.Statement> getS = new ArrayList<>();
             for(int i=0;i<ast.getStatements().size();i++) {
-                visit(ast.getStatements().get(i));
+                getS.add(i,visit(ast.getStatements().get(i)));
             }
-            return new Ast.Statement.While(ast.getCondition(), ast.getStatements());
+            return new Ast.Statement.While(visit(ast.getCondition()), getS);
         }
 
     }
