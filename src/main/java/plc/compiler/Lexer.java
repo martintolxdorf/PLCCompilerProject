@@ -54,13 +54,13 @@ public final class Lexer {
             return lexOperator();
         }else  if(peek("[!]") && peekPlus("[=]")) {
             return lexOperator();
-        } else if (peek("[0-9]") || peek("[.]")) {
+        } else if (peek("[0-9]")) {
             return lexNumber();
-        } else if (peek("[A-Za-z_]")) {
+        } else if (peek("[A-Za-z_]") ) {
             return lexIdentifier();
         }else if (peek("\"")){
             return lexString();
-        }else if(peek("[^ \n\r\t]" ) || peek("[=]")){ //fix this so just "=" is picked up correclty
+        }else if(peek("[^ \n\r\t]" ) || peek("[=]") || peek("[.]")){ //fix this so just "=" is picked up correclty
             return lexOperator();
         }else{
             throw new ParseException("invalid operand", chars.index);
@@ -87,21 +87,28 @@ public final class Lexer {
     Token lexNumber() throws ParseException {
         if(match("[+-]","[0-9]")) ;
         else if (match("[0-9]")) ;
-        else throw new ParseException("starts with decimal", chars.index);
 
-        int decimal = 0;
-        while (peek("[.]","[0-9]") || match("[0-9]")){
-            if(match("[.]","[0-9]")){
-                decimal++;
+        boolean isDec = false;
+
+        while(peek("[.]") || peek("[0-9]")){
+            if(!isDec && peek("[.]") && peekPlus("[0-9]")){
+                match("[.]");
+                match("[0-9]");
+                isDec = true;
+            }else if(isDec && peek("[.]")){
+                return chars.emit(Token.Type.DECIMAL);
+            }else if(!isDec && peek("[.]") && !peek("[0-9]")){
+                return chars.emit(Token.Type.INTEGER);
+            }else{
+                match("[0-9]");
             }
         }
-        if(decimal>1){
-            throw new ParseException("more than one decimal", chars.index);
-        }else if(decimal == 1){
+        if(isDec){
             return chars.emit(Token.Type.DECIMAL);
-        }
+        }else{
+            return chars.emit(Token.Type.INTEGER);
 
-        return chars.emit(Token.Type.INTEGER);
+        }
     }
 
     /**
@@ -131,9 +138,11 @@ public final class Lexer {
      */
     Token lexOperator() throws ParseException {
         if (peek("[=]") && peekPlus("[=]")){
-            while (match("[==]"));
+            match("[=]");
+            match("[=]");
         }else if (peek("[!]") && peekPlus("[=]")){
-            while (match("[!=]"));
+            match("[!]");
+            match("[=]");
         }else{
             match("[^ \\n\\r\\t]");
         }

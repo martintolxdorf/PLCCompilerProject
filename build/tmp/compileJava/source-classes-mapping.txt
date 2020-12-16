@@ -28,12 +28,12 @@ plc/compiler/AnalysisException.java
 plc/compiler/Token.java
  plc.compiler.Token
  plc.compiler.Token$Type
-plc/compiler/Lexer.java
- plc.compiler.Lexer
- plc.compiler.Lexer$CharStream
+plc/compiler/Analyzer.java
+ plc.compiler.Analyzer
 plc/compiler/ParseException.java
  plc.compiler.ParseException
 plc/compiler/Generator.java
  plc.compiler.Generator
-plc/compiler/Analyzer.java
- plc.compiler.Analyzer
+plc/compiler/Lexer.java
+ plc.compiler.Lexer
+ plc.compiler.Lexer$CharStream

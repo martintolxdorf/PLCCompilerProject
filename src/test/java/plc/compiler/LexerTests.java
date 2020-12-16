@@ -43,7 +43,7 @@ final class LexerTests {
                 Arguments.of("-1.0", false),
                 Arguments.of("007.000", false),
                 Arguments.of("1.", false),
-                Arguments.of(".5", false)
+                Arguments.of("1.5.3", true)
         );
     }
 
@@ -59,7 +59,8 @@ final class LexerTests {
                 Arguments.of("-1.0", false),
                 Arguments.of("007.000", true),
                 Arguments.of("1.", false),
-                Arguments.of(".5", false)
+                Arguments.of(".5", true)
+
         );
     }
 
@@ -98,7 +99,8 @@ final class LexerTests {
                 Arguments.of("**", false),
                 Arguments.of("*", true),
                 Arguments.of(" ", false),
-                Arguments.of(".5", false)
+                Arguments.of("LET first: INTEGER = 1;␊WHILE first != 10 DO␊    PRINT(first);␊    first = first + 1;␊END", true)
+
         );
     }
 

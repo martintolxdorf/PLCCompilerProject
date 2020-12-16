@@ -47,7 +47,7 @@ public final class Analyzer implements Ast.Visitor<Ast> {
     public Ast.Statement.Declaration visit(Ast.Statement.Declaration ast) throws AnalysisException {
         scope.define(ast.getName(), Stdlib.getType((ast.getType())));
         if(scope.lookup(ast.getName()) == null) {
-            throw new AnalysisException("Already defined");
+            throw new AnalysisException("already defined");
         }
         else if(Stdlib.getType(ast.getType()) == Stdlib.Type.VOID){
             throw new AnalysisException("VOID is not allowed");
